@@ -39,11 +39,11 @@ const spinButton = document.getElementById("spinButton");
 
 // SOUNDS
 
-const bigWinSound = new Audio(soundPath + "bigwin.png");
-const winSound = new Audio(soundPath + "win.png");
-const stopSound = new Audio(soundPath + "stop.png");
-const freeSpinSound = new Audio(soundPath + "freespin.png");
-
+const bigWinSound = new Audio(soundPath + "bigwin.mp3");
+const winSound = new Audio(soundPath + "win.mp3");
+const stopSound = new Audio(soundPath + "stop.mp3");
+const freeSpinSound = new Audio(soundPath + "freespin.mp3");
+const spinSound = new Audio(soundPath + "spin.mp3");
 
 function playSound(sound){
 
@@ -270,7 +270,7 @@ function checkScatter(){
 
 
         playSound(freeSpinSound);
-
+const spinSound = new Audio(soundPath + "spin.mp3");
 
         let bonus=0;
 
@@ -493,3 +493,4 @@ function hasExtraNeighbor(symbol,lastReel){
 
 
 }
+spinButton.addEventListener("click", spin);
