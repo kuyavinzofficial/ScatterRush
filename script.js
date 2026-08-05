@@ -39,11 +39,10 @@ const spinButton = document.getElementById("spinButton");
 
 // SOUNDS
 
-const spinSound = new Audio(soundPath + "spin.mp3");
-const stopSound = new Audio(soundPath + "stop.mp3");
-const winSound = new Audio(soundPath + "win.mp3");
-const scatterSound = new Audio(soundPath + "scatter.mp3");
-
+const bigWinSound = new Audio(soundPath + "bigwin.png");
+const winSound = new Audio(soundPath + "win.png");
+const stopSound = new Audio(soundPath + "stop.png");
+const freeSpinSound = new Audio(soundPath + "freespin.png");
 
 
 function playSound(sound){
