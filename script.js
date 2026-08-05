@@ -17,6 +17,9 @@ let balance = 1000;
 let bet = 10;
 let currentResult = [];
 
+let freeSpins = 0;
+
+
 const reels = [
     document.getElementById("reel1"),
     document.getElementById("reel2"),
@@ -25,8 +28,10 @@ const reels = [
     document.getElementById("reel5")
 ];
 
+
 const balanceText = document.getElementById("balance");
 const winText = document.getElementById("win");
+const freeSpinText = document.getElementById("freeSpins");
 const message = document.getElementById("message");
 const spinButton = document.getElementById("spinButton");
 
@@ -39,16 +44,19 @@ const scatterSound = new Audio(soundPath + "scatter.mp3");
 
 
 
-function randomSymbol(){
-    return symbols[Math.floor(Math.random() * symbols.length)];
-}
 
+function randomSymbol(){
+
+    return symbols[Math.floor(Math.random()*symbols.length)];
+
+}
 
 
 
 function playSound(sound){
 
     sound.currentTime = 0;
+
     sound.play().catch(()=>{});
 
 }
@@ -58,19 +66,45 @@ function playSound(sound){
 
 function spin(){
 
-    if(balance < bet){
-        message.innerHTML = "NO BALANCE";
-        return;
+
+    let isFreeSpin = freeSpins > 0;
+
+
+
+    if(!isFreeSpin){
+
+
+        if(balance < bet){
+
+            message.innerHTML="NO BALANCE";
+
+            return;
+
+        }
+
+
+        balance -= bet;
+
+        balanceText.innerHTML=balance;
+
+
+    }
+    else{
+
+        freeSpins--;
+
+        freeSpinText.innerHTML=freeSpins;
+
     }
 
 
-    balance -= bet;
-    balanceText.innerHTML = balance;
-    winText.innerHTML = 0;
-    message.innerHTML = "SPINNING...";
+
+    winText.innerHTML=0;
+
+    message.innerHTML="SPINNING...";
 
 
-    currentResult = [];
+    currentResult=[];
 
 
     playSound(spinSound);
@@ -80,28 +114,27 @@ function spin(){
     reels.forEach((reel,index)=>{
 
 
-        reel.innerHTML = "";
+        reel.innerHTML="";
 
 
-        let column = [];
+        let column=[];
 
 
-        // temporary spinning symbols
+        let animation=setInterval(()=>{
 
-        let spinInterval = setInterval(()=>{
 
             reel.innerHTML="";
 
 
             for(let i=0;i<3;i++){
 
-                let temp = randomSymbol();
 
                 let img=document.createElement("img");
 
-                img.src=imagePath + temp;
+                img.src=imagePath+randomSymbol();
 
                 reel.appendChild(img);
+
 
             }
 
@@ -110,54 +143,131 @@ function spin(){
 
 
 
-        // final stop
 
         setTimeout(()=>{
 
 
-            clearInterval(spinInterval);
+            clearInterval(animation);
 
 
             reel.innerHTML="";
 
 
+
             for(let row=0;row<3;row++){
 
-                let finalSymbol=randomSymbol();
 
-                column.push(finalSymbol);
+                let symbol=randomSymbol();
+
+
+                column.push(symbol);
+
 
 
                 let img=document.createElement("img");
 
-                img.src=imagePath + finalSymbol;
+                img.src=imagePath+symbol;
 
                 reel.appendChild(img);
+
 
             }
 
 
+
             currentResult[index]=column;
+
 
 
             playSound(stopSound);
 
 
 
-            // check result after last reel
-
             if(index===4){
 
+
+                checkScatter();
+
+
                 checkLines();
+
 
             }
 
 
-        },1200 + (index * 500));
+
+        },1200+(index*500));
 
 
 
     });
+
+
+
+}
+
+
+
+
+function checkScatter(){
+
+
+    let scatterCount=0;
+
+
+
+    for(let reel of currentResult){
+
+
+        for(let symbol of reel){
+
+
+            if(symbol==="feheng.png"){
+
+                scatterCount++;
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+    if(scatterCount>=3){
+
+
+        playSound(scatterSound);
+
+
+
+        if(scatterCount===3){
+
+            freeSpins+=10;
+
+        }
+        else if(scatterCount===4){
+
+            freeSpins+=15;
+
+        }
+        else if(scatterCount>=5){
+
+            freeSpins+=25;
+
+        }
+
+
+
+        freeSpinText.innerHTML=freeSpins;
+
+
+        message.innerHTML="🎉 FREE SPINS ACTIVATED!";
+
+
+    }
 
 
 }
@@ -172,42 +282,42 @@ function checkLines(){
     let totalWin=0;
 
 
-    let lines=[
-        0,
-        1,
-        2
-    ];
 
-
-
-    lines.forEach(row=>{
+    for(let row=0;row<3;row++){
 
 
         let line=[];
 
 
-        for(let reel=0; reel<5; reel++){
+        for(let reel=0;reel<5;reel++){
+
 
             line.push(currentResult[reel][row]);
+
 
         }
 
 
-        totalWin += checkCombination(line);
+        totalWin+=checkCombination(line);
 
 
-    });
+    }
+
+
 
 
 
     if(totalWin>0){
 
 
-        balance += totalWin;
+        balance+=totalWin;
+
 
         balanceText.innerHTML=balance;
 
+
         winText.innerHTML=totalWin;
+
 
         message.innerHTML="🎉 WIN "+totalWin;
 
@@ -216,12 +326,6 @@ function checkLines(){
 
 
     }
-    else{
-
-        message.innerHTML="TRY AGAIN";
-
-    }
-
 
 
 }
@@ -233,36 +337,50 @@ function checkCombination(line){
 
 
     let first=null;
+
     let count=0;
+
 
 
     for(let symbol of line){
 
 
+
         if(symbol==="wild.png"){
 
+
             count++;
+
             continue;
 
         }
 
 
+
         if(first===null){
 
+
             first=symbol;
+
             count++;
+
 
         }
         else if(symbol===first){
 
+
             count++;
+
 
         }
         else{
 
+
             break;
 
+
         }
+
 
     }
 
@@ -270,14 +388,19 @@ function checkCombination(line){
 
     if(count>=3){
 
-        return count * bet;
+
+        return count*bet;
+
 
     }
 
 
+
     return 0;
 
+
 }
+
 
 
 
