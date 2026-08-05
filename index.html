@@ -285,7 +285,21 @@ transform:translateX(0);
 </div>
 
 
+<select id="gameMode" onchange="changeMachine()">
 
+<option value="classic">
+🎰 Classic Rush
+</option>
+
+<option value="diamond">
+💎 Diamond Rush
+</option>
+
+<option value="seven">
+7️⃣ Lucky Seven
+</option>
+
+</select>
 <div class="machine">
 
 
@@ -369,7 +383,28 @@ return;
 
 
 coins += 500;
+xp += gainedXP;
 
+
+if(xp >= level * 100){
+
+xp = 0;
+
+level++;
+
+message += " 🆙 LEVEL UP!";
+
+}
+
+
+localStorage.setItem("scatterXP",xp);
+
+localStorage.setItem("scatterLevel",level);
+
+
+document.getElementById("xp").innerHTML=xp;
+
+document.getElementById("level").innerHTML=level;
 
 localStorage.setItem("scatterCoins",coins);
 
@@ -409,7 +444,7 @@ document.getElementById("coins").innerHTML = coins;
 
 
 let symbols=[
-
+let mode = "classic";
 "🍒",
 "🍋",
 "🍉",
@@ -429,7 +464,15 @@ return symbols[Math.floor(Math.random()*symbols.length)];
 
 
 
+function changeMachine(){
 
+mode = document.getElementById("gameMode").value;
+
+
+document.getElementById("message").innerHTML =
+"🎰 " + mode.toUpperCase() + " MODE";
+
+}
 function spin(){
 
 
@@ -525,7 +568,7 @@ let all=document.querySelectorAll(".reel");
 
 let message="";
 
-
+let gainedXP = 5;
 
 if(a==b && b==c){
 
@@ -536,7 +579,7 @@ coins += 500;
 
 message="🎉 JACKPOT! +500";
 
-
+gainedXP = 50;
 document.getElementById("jackpotSound").play();
 
 
@@ -558,7 +601,7 @@ else if(a==b || a==c || b==c){
 
 
 coins += 50;
-
+gainedXP = 20;
 
 message="✨ BIG WIN! +50";
 
