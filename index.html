@@ -1,433 +1,573 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>ScatterRush</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-.spin:hover {
 
-    box-shadow:
-    0 0 30px gold;
-
-    transform:scale(1.05);
-
-}
-
-
-.spin:active {
-
-    animation:buttonPress .2s;
-
-}
-
-
-@keyframes buttonPress {
-
-    0%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(.85);
-    }
-
-    100%{
-        transform:scale(1);
-    }
-
-}
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
 
-body {
-    margin:0;
-    min-height:100vh;
-    background:
-    radial-gradient(circle at top,#4b3a00,#050505 60%);
-    color:white;
-    font-family:'Arial',sans-serif;
-}
+body{
 
+margin:0;
+min-height:100vh;
 
-.container {
-    max-width:450px;
-    margin:auto;
-    padding:20px;
-}
+background:
+radial-gradient(circle,#5b4300,#050505 70%);
 
+font-family:Arial,sans-serif;
 
-h1 {
-    font-size:45px;
-    color:#ffd700;
-    letter-spacing:2px;
-    text-shadow:
-    0 0 10px #ffd700,
-    0 0 25px orange;
-}
+color:white;
 
-
-.coins {
-    background:#111;
-    border:2px solid #ffd700;
-    border-radius:20px;
-    padding:12px;
-    font-size:25px;
-    margin:20px 0;
-    box-shadow:0 0 15px gold;
-}
-
-
-.machine {
-
-    background:
-    linear-gradient(145deg,#222,#000);
-
-    border:8px solid #d4af37;
-
-    border-radius:35px;
-
-    padding:35px 20px;
-
-    box-shadow:
-    0 0 20px gold,
-    inset 0 0 20px #333;
+text-align:center;
 
 }
 
 
-.reels {
+.container{
 
-    display:flex;
-    justify-content:center;
-    gap:12px;
+max-width:450px;
 
-}
+margin:auto;
 
-
-.reel {
-
-    width:90px;
-    height:90px;
-
-    background:
-    linear-gradient(#fff,#ddd);
-
-    color:black;
-
-    border-radius:20px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:50px;
-
-    box-shadow:
-    inset 0 0 10px #999,
-    0 0 15px white;
+padding:20px;
 
 }
 
 
-.spin {
+h1{
 
-    margin-top:35px;
+font-size:45px;
 
-    width:80%;
+color:#ffd700;
 
-    padding:18px;
-
-    font-size:28px;
-
-    font-weight:bold;
-
-    color:#000;
-
-    background:
-    linear-gradient(#ffe66d,#ffb700);
-
-    border:none;
-
-    border-radius:25px;
-
-    box-shadow:
-    0 0 20px gold;
+text-shadow:
+0 0 10px gold,
+0 0 30px orange;
 
 }
 
 
-.spin:active {
+.coins{
 
-    transform:scale(.92);
+background:#111;
 
-}
+border:3px solid gold;
 
+border-radius:20px;
 
-#message {
+padding:15px;
 
-    margin-top:25px;
+font-size:25px;
 
-    min-height:45px;
+margin-bottom:25px;
 
-    font-size:28px;
-
-    font-weight:bold;
-
-    color:#ffd700;
-
-    text-shadow:
-    0 0 10px gold;
+box-shadow:0 0 20px gold;
 
 }
 
 
-.win {
-    animation: winEffect 0.5s infinite alternate;
-}
 
-@keyframes winEffect {
+.machine{
 
-    from {
-        transform:scale(1);
-    }
+background:
 
-    to {
-        transform:scale(1.15);
-    }
+linear-gradient(145deg,#222,#000);
 
-}
+border:8px solid #d4af37;
 
+border-radius:35px;
 
-.shake {
+padding:30px 20px;
 
-    animation:shake 0.2s infinite;
+box-shadow:
+
+0 0 25px gold,
+
+inset 0 0 20px #555;
 
 }
 
 
-@keyframes shake {
 
-    0% {
-        transform:translateX(0);
-    }
+.reels{
 
-    25% {
-        transform:translateX(-5px);
-    }
+display:flex;
 
-    50% {
-        transform:translateX(5px);
-    }
+justify-content:center;
 
-    75% {
-        transform:translateX(-5px);
-    }
-
-    100% {
-        transform:translateX(0);
-    }
+gap:12px;
 
 }
+
+
+.reel{
+
+width:90px;
+
+height:90px;
+
+background:white;
+
+color:black;
+
+border-radius:20px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:50px;
+
+box-shadow:
+
+inset 0 0 15px #999,
+
+0 0 15px white;
+
+}
+
+
+
+.spin{
+
+margin-top:35px;
+
+width:85%;
+
+padding:18px;
+
+font-size:28px;
+
+font-weight:bold;
+
+border:none;
+
+border-radius:25px;
+
+background:
+
+linear-gradient(#ffe66d,#ff9900);
+
+box-shadow:
+
+0 0 25px gold;
+
+}
+
+
+
+.spin:active{
+
+transform:scale(.9);
+
+}
+
+
+
+#message{
+
+margin-top:25px;
+
+font-size:28px;
+
+font-weight:bold;
+
+color:#ffd700;
+
+text-shadow:0 0 10px gold;
+
+}
+
+
+
+.win{
+
+animation:win .5s infinite alternate;
+
+}
+
+
+
+@keyframes win{
+
+from{
+
+transform:scale(1);
+
+}
+
+to{
+
+transform:scale(1.15);
+
+}
+
+}
+
+
+
+.shake{
+
+animation:shake .2s infinite;
+
+}
+
+
+
+@keyframes shake{
+
+0%{
+
+transform:translateX(0);
+
+}
+
+25%{
+
+transform:translateX(-5px);
+
+}
+
+50%{
+
+transform:translateX(5px);
+
+}
+
+75%{
+
+transform:translateX(-5px);
+
+}
+
+100%{
+
+transform:translateX(0);
+
+}
+
+}
+
+
+</style>
 
 </head>
 
-<body>
 
-<div class="container">
+<body><div class="container">
 
 <h1>🎰 ScatterRush</h1>
 
+
 <div class="coins">
-🪙 Coins: <span id="coins"></span>
+
+🪙 Coins:
+<span id="coins">1000</span>
+
 </div>
+
 
 
 <div class="machine">
 
+
 <div class="reels">
 
-<div class="reel" id="r1">❓</div>
-<div class="reel" id="r2">❓</div>
-<div class="reel" id="r3">❓</div>
+
+<div class="reel" id="r1">
+❓
+</div>
+
+
+<div class="reel" id="r2">
+❓
+</div>
+
+
+<div class="reel" id="r3">
+❓
+</div>
+
 
 </div>
+
 
 
 <button class="spin" onclick="spin()">
+
 SPIN
+
 </button>
 
 
-<div id="message"></div>
+<div id="message">
 
 </div>
 
+
 </div>
+
+
+</div>
+
+
+
+<audio id="spinSound"
+src="https://actions.google.com/sounds/v1/foley/metal_clang.ogg">
+</audio>
+
+
+<audio id="winSound"
+src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg">
+</audio>
+
+
+<audio id="jackpotSound"
+src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg">
+</audio>
 
 
 
 <script>
 
+
 let coins = localStorage.getItem("scatterCoins");
 
-if(coins == null){
-    coins = 1000;
+
+if(coins === null){
+
+coins = 1000;
+
 }
 
+else{
+
 coins = Number(coins);
+
+}
+
+
 
 document.getElementById("coins").innerHTML = coins;
 
 
-let symbols = [
+
+let symbols=[
+
 "🍒",
 "🍋",
 "🍉",
 "⭐",
 "💎",
 "7️⃣"
+
 ];
 
-
-function spin(){
-
-    if(coins < 10){
-
-        document.getElementById("message").innerHTML =
-        "❌ Not enough coins";
-
-        return;
-    }
-
-
-    coins -= 10;
-
-    document.getElementById("coins").innerHTML = coins;
-
-
-    let r1=document.getElementById("r1");
-    let r2=document.getElementById("r2");
-    let r3=document.getElementById("r3");
-
-
-    let spins = 0;
-
-
-    let timer=setInterval(function(){
-
-
-        r1.innerHTML=randomSymbol();
-        r2.innerHTML=randomSymbol();
-        r3.innerHTML=randomSymbol();
-
-
-        spins++;
-
-
-        if(spins >= 20){
-
-            clearInterval(timer);
-
-            checkResult();
-
-        }
-
-
-    },100);
-
-
-}
 
 
 function randomSymbol(){
 
-    return symbols[Math.floor(Math.random()*symbols.length)];
+return symbols[Math.floor(Math.random()*symbols.length)];
 
 }
+
+
+
+
+function spin(){
+
+
+
+if(coins < 10){
+
+document.getElementById("message").innerHTML =
+"❌ Not enough coins";
+
+return;
+
+}
+
+
+
+document.getElementById("spinSound").play();
+
+
+
+coins -= 10;
+
+
+document.getElementById("coins").innerHTML=coins;
+
+
+
+let r1=document.getElementById("r1");
+
+let r2=document.getElementById("r2");
+
+let r3=document.getElementById("r3");
+
+
+
+let count=0;
+
+
+
+let animation=setInterval(function(){
+
+
+r1.innerHTML=randomSymbol();
+
+r2.innerHTML=randomSymbol();
+
+r3.innerHTML=randomSymbol();
+
+
+
+count++;
+
+
+
+if(count>=20){
+
+
+clearInterval(animation);
+
+
+checkResult();
+
+
+}
+
+
+
+},100);
+
+
+
+}
+
 
 
 
 function checkResult(){
 
-    let a=document.getElementById("r1").innerHTML;
-    let b=document.getElementById("r2").innerHTML;
-    let c=document.getElementById("r3").innerHTML;
-
-    let message="";
-    
-    let reels = document.querySelector(".reels");
-    let allReels = document.querySelectorAll(".reel");
 
 
-    if(a==b && b==c){
+let a=document.getElementById("r1").innerHTML;
 
-        coins += 500;
+let b=document.getElementById("r2").innerHTML;
 
-        message="🎉 JACKPOT! +500 Coins";
-
-        reels.classList.add("shake");
-
-        allReels.forEach(function(item){
-            item.classList.add("win");
-        });
+let c=document.getElementById("r3").innerHTML;
 
 
-    }
 
-    else if(a==b || a==c || b==c){
+let reels=document.querySelector(".reels");
 
-        coins += 50;
+let all=document.querySelectorAll(".reel");
 
-        message="✨ BIG WIN! +50 Coins";
-
-        allReels.forEach(function(item){
-            item.classList.add("win");
-        });
+let message="";
 
 
-    }
 
-    else{
-
-        message="😢 TRY AGAIN";
-
-    }
+if(a==b && b==c){
 
 
-    document.getElementById("coins").innerHTML=coins;
 
-    document.getElementById("message").innerHTML=message;
-
-
-    localStorage.setItem("scatterCoins",coins);
+coins += 500;
 
 
-    setTimeout(function(){
+message="🎉 JACKPOT! +500";
 
-        reels.classList.remove("shake");
 
-        allReels.forEach(function(item){
+document.getElementById("jackpotSound").play();
 
-            item.classList.remove("win");
 
-        });
+reels.classList.add("shake");
 
-    },2000);
+
+all.forEach(function(x){
+
+x.classList.add("win");
+
+});
+
+
+
+}
+
+else if(a==b || a==c || b==c){
+
+
+
+coins += 50;
+
+
+message="✨ BIG WIN! +50";
+
+
+document.getElementById("winSound").play();
+
+
+
+all.forEach(function(x){
+
+x.classList.add("win");
+
+});
+
+
+
+}
+
+else{
+
+
+message="😢 TRY AGAIN";
 
 
 }
 
 
-</script>
+
+document.getElementById("coins").innerHTML=coins;
 
 
-</body>
-    <audio id="spinSound" src="https://actions.google.com/sounds/v1/foley/metal_clang.ogg"></audio>
+document.getElementById("message").innerHTML=message;
 
-<audio id="winSound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg"></audio>
 
-<audio id="jackpotSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
+localStorage.setItem("scatterCoins",coins);
+
+
+
+setTimeout(function(){
+
+
+reels.classList.remove("shake");
+
+
+all.forEach(function(x){
+
+x.classList.remove("win");
+
+});
+
+
+},2000);
+
+
+
+}
+
+
+
+</script></body>
 </html>
