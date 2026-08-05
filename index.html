@@ -10,9 +10,9 @@
 body {
     margin:0;
     padding:0;
-    background: radial-gradient(circle,#333,#000);
+    background:radial-gradient(circle,#444,#000);
     color:white;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     text-align:center;
 }
 
@@ -24,12 +24,12 @@ body {
 
 h1 {
     color:#ffd700;
-    font-size:38px;
-    text-shadow:0 0 15px #ffd700;
+    font-size:40px;
+    text-shadow:0 0 15px gold;
 }
 
 .coins {
-    font-size:22px;
+    font-size:24px;
     margin:20px;
 }
 
@@ -38,7 +38,7 @@ h1 {
     border:5px solid #ffd700;
     border-radius:25px;
     padding:25px;
-    box-shadow:0 0 25px #ffd700;
+    box-shadow:0 0 25px gold;
 }
 
 .reels {
@@ -48,10 +48,10 @@ h1 {
 }
 
 .reel {
-    background:white;
-    color:black;
     width:80px;
     height:80px;
+    background:white;
+    color:black;
     border-radius:15px;
     display:flex;
     align-items:center;
@@ -67,10 +67,6 @@ h1 {
     border:none;
     border-radius:15px;
     background:#ffd700;
-}
-
-.spin:active {
-    transform:scale(.95);
 }
 
 #message {
@@ -90,8 +86,9 @@ h1 {
 <h1>🎰 ScatterRush</h1>
 
 <div class="coins">
-🪙 Coins: <span id="coins">1000</span>
+🪙 Coins: <span id="coins"></span>
 </div>
+
 
 <div class="machine">
 
@@ -103,39 +100,41 @@ h1 {
 
 </div>
 
-<button class="spin" onclick="spin()">SPIN</button>
+
+<button class="spin" onclick="spin()">
+SPIN
+</button>
+
 
 <div id="message"></div>
 
 </div>
+
+</div>
+
+
+
 <script>
 
 let coins = localStorage.getItem("scatterCoins");
 
-if(coins === null){
+if(coins == null){
     coins = 1000;
-} else {
-    coins = Number(coins);
 }
+
+coins = Number(coins);
 
 document.getElementById("coins").innerHTML = coins;
 
 
 let symbols = [
-    "🍒",
-    "🍋",
-    "🍉",
-    "⭐",
-    "💎",
-    "7️⃣"
+"🍒",
+"🍋",
+"🍉",
+"⭐",
+"💎",
+"7️⃣"
 ];
-
-
-function randomSymbol(){
-
-    return symbols[Math.floor(Math.random()*symbols.length)];
-
-}
 
 
 function spin(){
@@ -151,30 +150,36 @@ function spin(){
 
     coins -= 10;
 
-
-    let r1 = document.getElementById("r1");
-    let r2 = document.getElementById("r2");
-    let r3 = document.getElementById("r3");
+    document.getElementById("coins").innerHTML = coins;
 
 
-    let count = 0;
+    let r1=document.getElementById("r1");
+    let r2=document.getElementById("r2");
+    let r3=document.getElementById("r3");
 
 
-    let animation = setInterval(function(){
+    let spins = 0;
 
-        r1.innerHTML = randomSymbol();
-        r2.innerHTML = randomSymbol();
-        r3.innerHTML = randomSymbol();
 
-        count++;
+    let timer=setInterval(function(){
 
-        if(count >= 15){
 
-            clearInterval(animation);
+        r1.innerHTML=randomSymbol();
+        r2.innerHTML=randomSymbol();
+        r3.innerHTML=randomSymbol();
 
-            finishSpin();
+
+        spins++;
+
+
+        if(spins >= 20){
+
+            clearInterval(timer);
+
+            checkResult();
 
         }
+
 
     },100);
 
@@ -182,11 +187,19 @@ function spin(){
 }
 
 
-function finishSpin(){
+function randomSymbol(){
 
-    let a = document.getElementById("r1").innerHTML;
-    let b = document.getElementById("r2").innerHTML;
-    let c = document.getElementById("r3").innerHTML;
+    return symbols[Math.floor(Math.random()*symbols.length)];
+
+}
+
+
+
+function checkResult(){
+
+    let a=document.getElementById("r1").innerHTML;
+    let b=document.getElementById("r2").innerHTML;
+    let c=document.getElementById("r3").innerHTML;
 
 
     let message="";
@@ -199,7 +212,7 @@ function finishSpin(){
 
     }
 
-    else if(a==b || b==c || a==c){
+    else if(a==b || a==c || b==c){
 
         coins += 50;
         message="✨ WIN! +50 Coins";
@@ -208,14 +221,14 @@ function finishSpin(){
 
     else{
 
-        message="😢 Try Again";
+        message="😢 TRY AGAIN";
 
     }
 
 
-    document.getElementById("coins").innerHTML = coins;
+    document.getElementById("coins").innerHTML=coins;
 
-    document.getElementById("message").innerHTML = message;
+    document.getElementById("message").innerHTML=message;
 
 
     localStorage.setItem("scatterCoins",coins);
