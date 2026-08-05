@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<title>ScatterRush</title>
+<title>ScatterRush Ultimate</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <style>
 
 *{
 box-sizing:border-box;
 }
+
 
 body{
 
@@ -29,6 +32,7 @@ text-align:center;
 }
 
 
+
 .container{
 
 max-width:450px;
@@ -40,9 +44,10 @@ padding:20px;
 }
 
 
+
 h1{
 
-font-size:45px;
+font-size:42px;
 
 color:#ffd700;
 
@@ -53,19 +58,18 @@ text-shadow:
 }
 
 
-.coins{
+
+.card{
 
 background:#111;
 
 border:3px solid gold;
 
-border-radius:20px;
+border-radius:25px;
 
 padding:15px;
 
-font-size:25px;
-
-margin-bottom:25px;
+margin:15px 0;
 
 box-shadow:0 0 20px gold;
 
@@ -76,19 +80,16 @@ box-shadow:0 0 20px gold;
 .machine{
 
 background:
-
 linear-gradient(145deg,#222,#000);
 
 border:8px solid #d4af37;
 
 border-radius:35px;
 
-padding:30px 20px;
+padding:30px 15px;
 
 box-shadow:
-
 0 0 25px gold,
-
 inset 0 0 20px #555;
 
 }
@@ -101,70 +102,61 @@ display:flex;
 
 justify-content:center;
 
-gap:12px;
+gap:10px;
 
 }
 
 
+
 .reel{
 
-width:90px;
+width:85px;
 
-height:90px;
+height:85px;
 
 background:white;
 
 color:black;
 
-border-radius:20px;
+border-radius:18px;
 
 display:flex;
 
-justify-content:center;
-
 align-items:center;
 
-font-size:50px;
+justify-content:center;
 
-box-shadow:
-
-inset 0 0 15px #999,
-
-0 0 15px white;
+font-size:45px;
 
 }
 
 
 
-.spin{
+button,
+select{
 
-margin-top:35px;
+width:90%;
 
-width:85%;
+padding:15px;
 
-padding:18px;
+margin:8px;
 
-font-size:28px;
+font-size:20px;
 
 font-weight:bold;
 
+border-radius:20px;
+
 border:none;
 
-border-radius:25px;
-
 background:
-
 linear-gradient(#ffe66d,#ff9900);
-
-box-shadow:
-
-0 0 25px gold;
 
 }
 
 
 
-.spin:active{
+button:active{
 
 transform:scale(.9);
 
@@ -174,15 +166,11 @@ transform:scale(.9);
 
 #message{
 
-margin-top:25px;
-
-font-size:28px;
-
-font-weight:bold;
+font-size:25px;
 
 color:#ffd700;
 
-text-shadow:0 0 10px gold;
+min-height:40px;
 
 }
 
@@ -224,61 +212,44 @@ animation:shake .2s infinite;
 
 @keyframes shake{
 
-0%{
+0%{transform:translateX(0)}
 
-transform:translateX(0);
+25%{transform:translateX(-5px)}
 
-}
+50%{transform:translateX(5px)}
 
-25%{
+75%{transform:translateX(-5px)}
 
-transform:translateX(-5px);
-
-}
-
-50%{
-
-transform:translateX(5px);
+100%{transform:translateX(0)}
 
 }
 
-75%{
 
-transform:translateX(-5px);
 
-}
+.hidden{
 
-100%{
-
-transform:translateX(0);
-
-}
+display:none;
 
 }
 
 
 </style>
 
+
 </head>
 
 
-<body><div class="container">
+<body>
+
+
+<div class="container">
+
 
 <h1>🎰 ScatterRush</h1>
 
 
-<div class="coins">
-<div class="coins">
+<div class="card">
 
-🏆 Achievements:
-
-<br>
-
-<span id="achievements">
-None yet
-</span>
-
-</div>
 🪙 Coins:
 <span id="coins">1000</span>
 
@@ -295,7 +266,32 @@ None yet
 </div>
 
 
-<select id="gameMode" onchange="changeMachine()">
+
+<div class="machine">
+
+
+<div class="reels">
+
+
+<div class="reel" id="r1">❓</div>
+
+<div class="reel" id="r2">❓</div>
+
+<div class="reel" id="r3">❓</div>
+
+
+</div>
+
+
+
+<button onclick="spin()">
+
+🎰 SPIN
+
+</button>
+
+
+<select id="mode">
 
 <option value="classic">
 🎰 Classic Rush
@@ -310,73 +306,73 @@ None yet
 </option>
 
 </select>
-<div class="machine">
 
 
-<div class="reels">
-
-
-<div class="reel" id="r1">
-❓
-</div>
-
-
-<div class="reel" id="r2">
-❓
-</div>
-
-
-<div class="reel" id="r3">
-❓
-</div>
+<div id="message"></div>
 
 
 </div>
+<div class="card">
 
+<button onclick="dailyBonus()">
+🎁 DAILY BONUS
+</button>
 
-
-<button class="spin" onclick="spin()">
-
-SPIN
-<button class="spin" onclick="openShop()">
+<button onclick="openShop()">
 🛒 SHOP
 </button>
-<button class="spin" onclick="dailyBonus()">
 
-🎁 DAILY BONUS
+</div>
 
+
+
+<div id="shop" class="card hidden">
+
+<h2>🛒 SHOP</h2>
+
+
+<button onclick="buyCoins()">
++1000 🪙 Coins
 </button>
 
-<div id="message">
-<div id="shop" style="display:none;">
 
-<h2>🛒 Coin Shop</h2>
+<h3>🎨 Themes</h3>
 
-<button class="spin" onclick="buyCoins()">
-Buy 1000 Coins
-</button>
-<h3>🎨 Machine Theme</h3>
 
-<button class="spin" onclick="changeTheme('gold')">
+<button onclick="changeTheme('gold')">
 🟡 Gold
 </button>
 
-<button class="spin" onclick="changeTheme('diamond')">
+
+<button onclick="changeTheme('diamond')">
 💎 Diamond
 </button>
 
-<button class="spin" onclick="changeTheme('neon')">
+
+<button onclick="changeTheme('neon')">
 🟣 Neon
 </button>
-<button class="spin" onclick="closeShop()">
-Close Shop
+
+
+<button onclick="closeShop()">
+❌ Close
 </button>
 
-</div>
+
 </div>
 
 
+
+<div class="card">
+
+<h3>🏆 Achievements</h3>
+
+<div id="achievements">
+None yet
 </div>
+
+</div>
+
 
 
 </div>
@@ -400,105 +396,28 @@ src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg">
 
 
 <script>
-function dailyBonus(){
-
-let today = new Date().toDateString();
-
-let lastBonus = localStorage.getItem("lastBonus");
 
 
-if(lastBonus == today){
-
-document.getElementById("message").innerHTML =
-"🎁 Bonus already claimed today!";
-
-return;
-
-}
+let coins =
+Number(localStorage.getItem("scatterCoins")) || 1000;
 
 
-if(mode=="classic"){
-
-coins += 500;
-
-}
+let level =
+Number(localStorage.getItem("scatterLevel")) || 1;
 
 
-else if(mode=="diamond"){
-
-coins += 1000;
-
-}
+let xp =
+Number(localStorage.getItem("scatterXP")) || 0;
 
 
-else if(mode=="seven"){
 
-coins += 2500;
-
-}
-xp += gainedXP;
-
-
-if(xp >= level * 100){
-
-xp = 0;
-
-level++;
-
-message += " 🆙 LEVEL UP!";
-
-}
-
-
-localStorage.setItem("scatterXP",xp);
-
-localStorage.setItem("scatterLevel",level);
-
-
-document.getElementById("xp").innerHTML=xp;
-
-document.getElementById("level").innerHTML=level;
-
-localStorage.setItem("scatterCoins",coins);
-
-localStorage.setItem("lastBonus",today);
-
-
-document.getElementById("coins").innerHTML=coins;
-
-
-document.getElementById("message").innerHTML =
-"🎉 Daily Bonus +500 Coins!";
-
-
-}
-
-let coins = localStorage.getItem("scatterCoins");let achievements =
+let achievements =
 JSON.parse(localStorage.getItem("achievements")) || [];
-let level = Number(localStorage.getItem("scatterLevel")) || 1;
-
-let xp = Number(localStorage.getItem("scatterXP")) || 0;
-
-if(coins === null){
-
-coins = 1000;
-
-}
-
-else{
-
-coins = Number(coins);
-
-}
-
-
-
-document.getElementById("coins").innerHTML = coins;
 
 
 
 let symbols=[
-let mode = "classic";
+
 "🍒",
 "🍋",
 "🍉",
@@ -510,30 +429,82 @@ let mode = "classic";
 
 
 
+function updateUI(){
+
+document.getElementById("coins").innerHTML=coins;
+
+document.getElementById("level").innerHTML=level;
+
+document.getElementById("xp").innerHTML=xp;
+
+
+document.getElementById("achievements").innerHTML =
+achievements.length ?
+achievements.join("<br>") :
+"None yet";
+
+}
+
+
+
+updateUI();
+
+
+
+
+function unlock(name){
+
+if(!achievements.includes(name)){
+
+achievements.push(name);
+
+localStorage.setItem(
+"achievements",
+JSON.stringify(achievements)
+
+);
+
+}
+
+updateUI();
+
+}
+
+
+
+
 function randomSymbol(){
 
-return symbols[Math.floor(Math.random()*symbols.length)];
+return symbols[
+Math.floor(Math.random()*symbols.length)
+];
 
 }
 
 
 
-function changeMachine(){
 
-mode = document.getElementById("gameMode").value;
-
-
-document.getElementById("message").innerHTML =
-"🎰 " + mode.toUpperCase() + " MODE";
-
-}
 function spin(){
-unlockAchievement("🎰 First Spin");
 
 
-if(coins < 10){
+unlock("🎰 First Spin");
 
-document.getElementById("message").innerHTML =
+
+let mode=document.getElementById("mode").value;
+
+
+let cost=10;
+
+
+if(mode=="diamond") cost=25;
+
+if(mode=="seven") cost=50;
+
+
+
+if(coins<cost){
+
+document.getElementById("message").innerHTML=
 "❌ Not enough coins";
 
 return;
@@ -546,47 +517,14 @@ document.getElementById("spinSound").play();
 
 
 
-let spinCost = 10;
+coins-=cost;
 
 
-if(mode=="diamond"){
+let a=document.getElementById("r1");
 
-spinCost = 25;
+let b=document.getElementById("r2");
 
-}
-
-
-if(mode=="seven"){
-
-spinCost = 50;
-
-}
-
-
-if(coins < spinCost){
-
-document.getElementById("message").innerHTML =
-"❌ Not enough coins";
-
-return;
-
-}
-
-
-coins -= spinCost;
-
-
-document.getElementById("coins").innerHTML=coins;
-document.getElementById("level").innerHTML = level;
-
-document.getElementById("xp").innerHTML = xp;
-
-
-let r1=document.getElementById("r1");
-
-let r2=document.getElementById("r2");
-
-let r3=document.getElementById("r3");
+let c=document.getElementById("r3");
 
 
 
@@ -594,32 +532,26 @@ let count=0;
 
 
 
-let animation=setInterval(function(){
+let roll=setInterval(function(){
 
 
-r1.innerHTML=randomSymbol();
+a.innerHTML=randomSymbol();
 
-r2.innerHTML=randomSymbol();
+b.innerHTML=randomSymbol();
 
-r3.innerHTML=randomSymbol();
-
+c.innerHTML=randomSymbol();
 
 
 count++;
 
 
-
 if(count>=20){
 
+clearInterval(roll);
 
-clearInterval(animation);
-
-
-checkResult();
-
+result(mode);
 
 }
-
 
 
 },100);
@@ -631,8 +563,7 @@ checkResult();
 
 
 
-function checkResult(){
-
+function result(mode){
 
 
 let a=document.getElementById("r1").innerHTML;
@@ -642,210 +573,274 @@ let b=document.getElementById("r2").innerHTML;
 let c=document.getElementById("r3").innerHTML;
 
 
+let gainXP=5;
 
-let reels=document.querySelector(".reels");
+let msg="";
 
-let all=document.querySelectorAll(".reel");
-
-let message="";
-
-let gainedXP = 5;
 
 if(a==b && b==c){
 
 
+unlock("💰 First Jackpot");
 
-coins += 500;
+
+if(mode=="classic")
+coins+=500;
 
 
-message="🎉 JACKPOT! +500";
+if(mode=="diamond")
+coins+=1000;
 
-gainedXP = 50;
+
+if(mode=="seven")
+coins+=2500;
+
+
+gainXP=50;
+
+
+msg="🎉 JACKPOT!";
+
+
 document.getElementById("jackpotSound").play();
 
 
-reels.classList.add("shake");
-
-
-all.forEach(function(x){
-
-x.classList.add("win");
-
-});
-
+document.querySelector(".reels")
+.classList.add("shake");
 
 
 }
+
 
 else if(a==b || a==c || b==c){
 
 
-
-if(mode=="classic"){
-
-coins += 50;
-
-}
+if(mode=="classic")
+coins+=50;
 
 
-else if(mode=="diamond"){
-
-coins += 150;
-
-}
+if(mode=="diamond")
+coins+=150;
 
 
-else if(mode=="seven"){
-
-coins += 300;
-
-}
-gainedXP = 20;
-
-message="✨ BIG WIN! +50";
-
-
-document.getElementById("winSound").play();
+if(mode=="seven")
+coins+=300;
 
 
 
-all.forEach(function(x){
-
-x.classList.add("win");
-
-});
+gainXP=20;
 
 
-
-}
-
-else{
+msg="✨ BIG WIN";
 
 
-message="😢 TRY AGAIN";
+document.getElementById("winSound").pla();
 
 
 }
 
 
 
-document.getElementById("coins").innerHTML=coins;
+xp+=gainXP;
 
 
-document.getElementById("message").innerHTML=message;
+
+if(xp>=level*100){
+
+xp=0;
+
+level++;
+
+msg+=" 🆙 LEVEL UP!";
+
+unlock("⭐ Level Up");
+
+}
 
 
 
 localStorage.setItem("scatterCoins",coins);
+
+localStorage.setItem("scatterXP",xp);
+
+localStorage.setItem("scatterLevel",level);
+
+
+
+document.getElementById("message").innerHTML=msg;
+
+
+updateUI();
 
 
 
 setTimeout(function(){
 
-
-reels.classList.remove("shake");
-
-
-all.forEach(function(x){
-
-x.classList.remove("win");
-
-});
-
+document.querySelector(".reels")
+.classList.remove("shake");
 
 },2000);
 
 
+}function dailyBonus(){
+
+let today = new Date().toDateString();
+
+let last =
+localStorage.getItem("dailyBonus");
+
+
+if(last==today){
+
+document.getElementById("message").innerHTML =
+"🎁 Bonus already claimed!";
+
+return;
 
 }
+
+
+coins+=500;
+
+
+localStorage.setItem(
+"scatterCoins",
+coins
+);
+
+
+localStorage.setItem(
+"dailyBonus",
+today
+);
+
+
+document.getElementById("message").innerHTML =
+"🎉 Daily Bonus +500 Coins";
+
+
+updateUI();
+
+}
+
+
+
 
 
 function openShop(){
 
-document.getElementById("shop").style.display="block";
+document.getElementById("shop")
+.classList.remove("hidden");
 
 }
+
 
 
 
 function closeShop(){
 
-document.getElementById("shop").style.display="none";
+document.getElementById("shop")
+.classList.add("hidden");
 
 }
 
 
 
+
 function buyCoins(){
 
-coins += 1000;
+coins+=1000;
 
 
-localStorage.setItem("scatterCoins",coins);
-
-
-document.getElementById("coins").innerHTML=coins;
+localStorage.setItem(
+"scatterCoins",
+coins
+);
 
 
 document.getElementById("message").innerHTML =
-"🛒 +1000 Coins Added!";
+"🛒 +1000 Coins Added";
+
+
+updateUI();
+
+}
+
+
+
+
 function changeTheme(theme){
 
 
-let machine=document.querySelector(".machine");
+let machine =
+document.querySelector(".machine");
+
 
 
 if(theme=="gold"){
 
 machine.style.borderColor="gold";
 
-machine.style.boxShadow="0 0 25px gold";
+machine.style.boxShadow=
+"0 0 30px gold";
 
 }
 
 
-else if(theme=="diamond"){
+
+if(theme=="diamond"){
 
 machine.style.borderColor="cyan";
 
-machine.style.boxShadow="0 0 25px cyan";
+machine.style.boxShadow=
+"0 0 30px cyan";
 
 }
 
 
-else if(theme=="neon"){
+
+
+if(theme=="neon"){
 
 machine.style.borderColor="magenta";
 
-machine.style.boxShadow="0 0 25px magenta";
+machine.style.boxShadow=
+"0 0 30px magenta";
 
 }
 
 
-localStorage.setItem("theme",theme);
+
+localStorage.setItem(
+"theme",
+theme
+);
 
 
 document.getElementById("message").innerHTML =
-"🎨 Theme Changed!";
+"🎨 Theme Changed";
 
-}
-  }function unlockAchievement(name){
-
-if(!achievements.includes(name)){
-
-achievements.push(name);
-
-localStorage.setItem(
-"achievements",
-JSON.stringify(achievements)
-);
 
 }
 
 
-document.getElementById("achievements").innerHTML =
-achievements.join("<br>");
 
-  }
-</script></body>
+
+let savedTheme =
+localStorage.getItem("theme");
+
+
+if(savedTheme){
+
+changeTheme(savedTheme);
+
+}
+
+
+
+</script>
+
+
+</body>
+
 </html>
