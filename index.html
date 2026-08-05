@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ScatterRush</title>
+
+<style>
+body {
+    margin: 0;
+    background: linear-gradient(135deg,#111,#333);
+    color:white;
+    font-family: Arial, sans-serif;
+    text-align:center;
+}
+
+h1 {
+    color:#ffd700;
+    font-size:40px;
+}
+
+.game {
+    margin-top:50px;
+}
+
+.reels {
+    background:#000;
+    padding:25px;
+    border-radius:20px;
+    display:inline-block;
+    font-size:55px;
+}
+
+button {
+    margin-top:30px;
+    padding:15px 50px;
+    font-size:22px;
+    border:none;
+    border-radius:15px;
+    background:#ffd700;
+    cursor:pointer;
+}
+
+button:hover {
+    transform:scale(1.05);
+}
+
+#message {
+    font-size:25px;
+    margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🎰 ScatterRush</h1>
+
+<div class="game">
+
+<h2>🪙 Coins: <span id="coins">1000</span></h2>
+
+<div class="reels">
+<span id="r1">❓</span>
+<span id="r2">❓</span>
+<span id="r3">❓</span>
+</div>
+
+<br>
+
+<button onclick="spin()">SPIN</button>
+
+<div id="message"></div>
+
+</div>
+
+
+<script>
+
+let coins = 1000;
+
+let items = [
+"🍒",
+"🍋",
+"🍉",
+"⭐",
+"💎",
+"7️⃣"
+];
+
+
+function spin(){
+
+if(coins < 10){
+document.getElementById("message").innerHTML="No more coins!";
+return;
+}
+
+coins -= 10;
+
+
+let a = items[Math.floor(Math.random()*items.length)];
+let b = items[Math.floor(Math.random()*items.length)];
+let c = items[Math.floor(Math.random()*items.length)];
+
+
+document.getElementById("r1").innerHTML=a;
+document.getElementById("r2").innerHTML=b;
+document.getElementById("r3").innerHTML=c;
+
+
+let msg="";
+
+
+if(a==b && b==c){
+
+coins += 500;
+msg="🎉 JACKPOT! +500 coins";
+
+}
+else if(a==b || b==c || a==c){
+
+coins += 50;
+msg="✨ WIN! +50 coins";
+
+}
+else{
+
+msg="😢 Try Again";
+
+}
+
+
+document.getElementById("coins").innerHTML=coins;
+document.getElementById("message").innerHTML=msg;
+
+
+}
+
+</script>
+
+</body>
+</html>
