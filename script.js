@@ -47,14 +47,64 @@ function spin(){
 
     coins -= 10;
 
-    let interval = setInterval(function(){
+    updateUI();
 
-        document.getElementById("reel1").src = randomSymbol();
-        document.getElementById("reel2").src = randomSymbol();
-        document.getElementById("reel3").src = randomSymbol();
+    document.getElementById("message").innerHTML =
+    "🎰 Spinning...";
 
-    },100);
+    let reel1 = document.getElementById("reel1");
+    let reel2 = document.getElementById("reel2");
+    let reel3 = document.getElementById("reel3");
 
+    let spin1 = setInterval(()=>{
+        reel1.src=randomSymbol();
+    },80);
+
+    let spin2 = setInterval(()=>{
+        reel2.src=randomSymbol();
+    },80);
+
+    let spin3 = setInterval(()=>{
+        reel3.src=randomSymbol();
+    },80);
+
+    let r1,r2,r3;
+
+    setTimeout(()=>{
+
+        clearInterval(spin1);
+
+        r1=randomSymbol();
+
+        reel1.src=r1;
+
+    },1200);
+
+
+    setTimeout(()=>{
+
+        clearInterval(spin2);
+
+        r2=randomSymbol();
+
+        reel2.src=r2;
+
+    },1800);
+
+
+    setTimeout(()=>{
+
+        clearInterval(spin3);
+
+        r3=randomSymbol();
+
+        reel3.src=r3;
+
+        checkWin(r1,r2,r3);
+
+    },2400);
+
+}
     setTimeout(function(){
 
         clearInterval(interval);
