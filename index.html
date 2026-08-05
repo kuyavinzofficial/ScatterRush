@@ -345,7 +345,19 @@ SPIN
 <button class="spin" onclick="buyCoins()">
 Buy 1000 Coins
 </button>
+<h3>🎨 Machine Theme</h3>
 
+<button class="spin" onclick="changeTheme('gold')">
+🟡 Gold
+</button>
+
+<button class="spin" onclick="changeTheme('diamond')">
+💎 Diamond
+</button>
+
+<button class="spin" onclick="changeTheme('neon')">
+🟣 Neon
+</button>
 <button class="spin" onclick="closeShop()">
 Close Shop
 </button>
@@ -737,6 +749,75 @@ x.classList.remove("win");
 }
 
 
+function openShop(){
 
+document.getElementById("shop").style.display="block";
+
+}
+
+
+
+function closeShop(){
+
+document.getElementById("shop").style.display="none";
+
+}
+
+
+
+function buyCoins(){
+
+coins += 1000;
+
+
+localStorage.setItem("scatterCoins",coins);
+
+
+document.getElementById("coins").innerHTML=coins;
+
+
+document.getElementById("message").innerHTML =
+"🛒 +1000 Coins Added!";
+function changeTheme(theme){
+
+
+let machine=document.querySelector(".machine");
+
+
+if(theme=="gold"){
+
+machine.style.borderColor="gold";
+
+machine.style.boxShadow="0 0 25px gold";
+
+}
+
+
+else if(theme=="diamond"){
+
+machine.style.borderColor="cyan";
+
+machine.style.boxShadow="0 0 25px cyan";
+
+}
+
+
+else if(theme=="neon"){
+
+machine.style.borderColor="magenta";
+
+machine.style.boxShadow="0 0 25px magenta";
+
+}
+
+
+localStorage.setItem("theme",theme);
+
+
+document.getElementById("message").innerHTML =
+"🎨 Theme Changed!";
+
+}
+  }
 </script></body>
 </html>
