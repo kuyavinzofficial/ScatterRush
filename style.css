@@ -75,7 +75,17 @@ button{
 }
 
 button:hover{
-    transform:scale(1.06);
+    transform:scale(1.06);.reel{
+
+    transition:.25s;
+
+}
+
+.reel:hover{
+
+    transform:scale(1.05);
+
+}
 }
 
 #message{
