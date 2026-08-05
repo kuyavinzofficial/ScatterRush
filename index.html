@@ -268,7 +268,17 @@ transform:translateX(0);
 
 
 <div class="coins">
+<div class="coins">
 
+🏆 Achievements:
+
+<br>
+
+<span id="achievements">
+None yet
+</span>
+
+</div>
 🪙 Coins:
 <span id="coins">1000</span>
 
@@ -463,7 +473,8 @@ document.getElementById("message").innerHTML =
 
 }
 
-let coins = localStorage.getItem("scatterCoins");
+let coins = localStorage.getItem("scatterCoins");let achievements =
+JSON.parse(localStorage.getItem("achievements")) || [];
 let level = Number(localStorage.getItem("scatterLevel")) || 1;
 
 let xp = Number(localStorage.getItem("scatterXP")) || 0;
@@ -517,7 +528,7 @@ document.getElementById("message").innerHTML =
 
 }
 function spin(){
-
+unlockAchievement("🎰 First Spin");
 
 
 if(coins < 10){
@@ -818,6 +829,23 @@ document.getElementById("message").innerHTML =
 "🎨 Theme Changed!";
 
 }
+  }function unlockAchievement(name){
+
+if(!achievements.includes(name)){
+
+achievements.push(name);
+
+localStorage.setItem(
+"achievements",
+JSON.stringify(achievements)
+);
+
+}
+
+
+document.getElementById("achievements").innerHTML =
+achievements.join("<br>");
+
   }
 </script></body>
 </html>
