@@ -11,12 +11,11 @@ const symbols = [
 ];
 
 const imagePath = "./assets/symbols/";
+const soundPath = "./assets/sounds/";
 
 let balance = 1000;
 let bet = 10;
-
 let currentResult = [];
-
 
 const reels = [
     document.getElementById("reel1"),
@@ -26,141 +25,203 @@ const reels = [
     document.getElementById("reel5")
 ];
 
-
 const balanceText = document.getElementById("balance");
 const winText = document.getElementById("win");
 const message = document.getElementById("message");
 const spinButton = document.getElementById("spinButton");
 
 
+// SOUNDS
+const spinSound = new Audio(soundPath + "spin.mp3");
+const stopSound = new Audio(soundPath + "stop.mp3");
+const winSound = new Audio(soundPath + "win.mp3");
+const scatterSound = new Audio(soundPath + "scatter.mp3");
+
+
 
 function randomSymbol(){
+    return symbols[Math.floor(Math.random() * symbols.length)];
+}
 
-    let random = Math.floor(Math.random() * symbols.length);
 
-    return symbols[random];
+
+
+function playSound(sound){
+
+    sound.currentTime = 0;
+    sound.play().catch(()=>{});
 
 }
+
 
 
 
 function spin(){
 
     if(balance < bet){
-
         message.innerHTML = "NO BALANCE";
         return;
-
     }
 
 
     balance -= bet;
-
     balanceText.innerHTML = balance;
-
     winText.innerHTML = 0;
+    message.innerHTML = "SPINNING...";
+
 
     currentResult = [];
 
 
+    playSound(spinSound);
 
-    reels.forEach((reel)=>{
+
+
+    reels.forEach((reel,index)=>{
+
 
         reel.innerHTML = "";
+
 
         let column = [];
 
 
-        for(let row = 0; row < 3; row++){
+        // temporary spinning symbols
 
-            let symbol = randomSymbol();
+        let spinInterval = setInterval(()=>{
 
-            column.push(symbol);
-
-
-            let img = document.createElement("img");
-
-            img.src = imagePath + symbol;
-
-            img.width = 55;
-            img.height = 55;
-
-            reel.appendChild(img);
-
-        }
+            reel.innerHTML="";
 
 
-        currentResult.push(column);
+            for(let i=0;i<3;i++){
+
+                let temp = randomSymbol();
+
+                let img=document.createElement("img");
+
+                img.src=imagePath + temp;
+
+                reel.appendChild(img);
+
+            }
+
+
+        },80);
+
+
+
+        // final stop
+
+        setTimeout(()=>{
+
+
+            clearInterval(spinInterval);
+
+
+            reel.innerHTML="";
+
+
+            for(let row=0;row<3;row++){
+
+                let finalSymbol=randomSymbol();
+
+                column.push(finalSymbol);
+
+
+                let img=document.createElement("img");
+
+                img.src=imagePath + finalSymbol;
+
+                reel.appendChild(img);
+
+            }
+
+
+            currentResult[index]=column;
+
+
+            playSound(stopSound);
+
+
+
+            // check result after last reel
+
+            if(index===4){
+
+                checkLines();
+
+            }
+
+
+        },1200 + (index * 500));
+
 
 
     });
 
-
-
-    checkLines();
 
 }
 
 
 
 
+
 function checkLines(){
 
-    let totalWin = 0;
+
+    let totalWin=0;
 
 
-    // TOP LINE
-    let top = [];
-
-    for(let i=0;i<5;i++){
-        top.push(currentResult[i][0]);
-    }
-
-
-    totalWin += checkCombination(top);
+    let lines=[
+        0,
+        1,
+        2
+    ];
 
 
 
-    // MIDDLE LINE
-    let middle = [];
-
-    for(let i=0;i<5;i++){
-        middle.push(currentResult[i][1]);
-    }
+    lines.forEach(row=>{
 
 
-    totalWin += checkCombination(middle);
+        let line=[];
 
 
+        for(let reel=0; reel<5; reel++){
 
-    // BOTTOM LINE
-    let bottom = [];
+            line.push(currentResult[reel][row]);
 
-    for(let i=0;i<5;i++){
-        bottom.push(currentResult[i][2]);
-    }
+        }
 
 
-    totalWin += checkCombination(bottom);
+        totalWin += checkCombination(line);
+
+
+    });
 
 
 
-    if(totalWin > 0){
+    if(totalWin>0){
+
 
         balance += totalWin;
 
-        balanceText.innerHTML = balance;
+        balanceText.innerHTML=balance;
 
-        winText.innerHTML = totalWin;
+        winText.innerHTML=totalWin;
 
-        message.innerHTML = "🎉 WIN " + totalWin;
+        message.innerHTML="🎉 WIN "+totalWin;
 
 
-    }else{
+        playSound(winSound);
 
-        message.innerHTML = "TRY AGAIN";
 
     }
+    else{
+
+        message.innerHTML="TRY AGAIN";
+
+    }
+
 
 
 }
@@ -170,14 +231,15 @@ function checkLines(){
 
 function checkCombination(line){
 
-    let firstSymbol = null;
-    let count = 0;
+
+    let first=null;
+    let count=0;
 
 
     for(let symbol of line){
 
 
-        if(symbol === "wild.png"){
+        if(symbol==="wild.png"){
 
             count++;
             continue;
@@ -185,13 +247,13 @@ function checkCombination(line){
         }
 
 
-        if(firstSymbol === null){
+        if(first===null){
 
-            firstSymbol = symbol;
+            first=symbol;
             count++;
 
         }
-        else if(symbol === firstSymbol){
+        else if(symbol===first){
 
             count++;
 
@@ -206,7 +268,7 @@ function checkCombination(line){
 
 
 
-    if(count >= 3){
+    if(count>=3){
 
         return count * bet;
 
@@ -220,4 +282,4 @@ function checkCombination(line){
 
 
 
-spinButton.addEventListener("click", spin);
+spinButton.addEventListener("click",spin);
