@@ -10,9 +10,13 @@ const symbols = [
     "wild.png"
 ];
 
+const imagePath = "./assets/symbols/";
 
 let balance = 1000;
 let bet = 10;
+
+let currentResult = [];
+
 
 const reels = [
     document.getElementById("reel1"),
@@ -29,9 +33,6 @@ const message = document.getElementById("message");
 const spinButton = document.getElementById("spinButton");
 
 
-let currentResult = [];
-
-
 
 function randomSymbol(){
 
@@ -43,12 +44,11 @@ function randomSymbol(){
 
 
 
-
 function spin(){
 
     if(balance < bet){
 
-        message.innerHTML = "Not enough balance!";
+        message.innerHTML = "NO BALANCE";
         return;
 
     }
@@ -60,93 +60,88 @@ function spin(){
 
     winText.innerHTML = 0;
 
-
     currentResult = [];
+
 
 
     reels.forEach((reel)=>{
 
+        reel.innerHTML = "";
 
-        reel.innerHTML="";
-
-        let reelResult=[];
-
-
-        for(let row=0; row<3; row++){
-
-            let symbol=randomSymbol();
-
-            reelResult.push(symbol);
+        let column = [];
 
 
-            let img=document.createElement("img");
+        for(let row = 0; row < 3; row++){
 
-            img.src="assets/symbols/" + symbol;
+            let symbol = randomSymbol();
 
-            img.alt=symbol;
+            column.push(symbol);
+
+
+            let img = document.createElement("img");
+
+            img.src = imagePath + symbol;
+
+            img.width = 55;
+            img.height = 55;
 
             reel.appendChild(img);
 
         }
 
 
-        currentResult.push(reelResult);
+        currentResult.push(column);
 
 
     });
 
 
 
-    checkWin();
-
+    checkLines();
 
 }
 
 
 
 
-function checkWin(){
+function checkLines(){
+
+    let totalWin = 0;
 
 
-    let totalWin=0;
-
-
-    // LINE 1 - TOP
-    let line1=[];
-
-    for(let i=0;i<5;i++){
-
-        line1.push(currentResult[i][0]);
-
-    }
-
-    totalWin += calculateLine(line1);
-
-
-
-    // LINE 2 - MIDDLE
-    let line2=[];
+    // TOP LINE
+    let top = [];
 
     for(let i=0;i<5;i++){
-
-        line2.push(currentResult[i][1]);
-
+        top.push(currentResult[i][0]);
     }
 
-    totalWin += calculateLine(line2);
+
+    totalWin += checkCombination(top);
 
 
 
-    // LINE 3 - BOTTOM
-    let line3=[];
+    // MIDDLE LINE
+    let middle = [];
 
     for(let i=0;i<5;i++){
-
-        line3.push(currentResult[i][2]);
-
+        middle.push(currentResult[i][1]);
     }
 
-    totalWin += calculateLine(line3);
+
+    totalWin += checkCombination(middle);
+
+
+
+    // BOTTOM LINE
+    let bottom = [];
+
+    for(let i=0;i<5;i++){
+        bottom.push(currentResult[i][2]);
+    }
+
+
+    totalWin += checkCombination(bottom);
 
 
 
@@ -158,10 +153,10 @@ function checkWin(){
 
         winText.innerHTML = totalWin;
 
-        message.innerHTML = "🎉 WIN " + totalWin + "!";
+        message.innerHTML = "🎉 WIN " + totalWin;
 
-    }
-    else{
+
+    }else{
 
         message.innerHTML = "TRY AGAIN";
 
@@ -173,12 +168,10 @@ function checkWin(){
 
 
 
-function calculateLine(line){
-
+function checkCombination(line){
 
     let firstSymbol = null;
     let count = 0;
-
 
 
     for(let symbol of line){
@@ -187,7 +180,6 @@ function calculateLine(line){
         if(symbol === "wild.png"){
 
             count++;
-
             continue;
 
         }
@@ -210,7 +202,6 @@ function calculateLine(line){
 
         }
 
-
     }
 
 
@@ -225,6 +216,7 @@ function calculateLine(line){
     return 0;
 
 }
+
 
 
 
