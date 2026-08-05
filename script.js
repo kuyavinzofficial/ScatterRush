@@ -68,7 +68,17 @@ function playSound(sound){
     });
 
 }
+spinSound.addEventListener("canplaythrough", ()=>{
+    console.log("spin.mp3 loaded");
+});
 
+stopSound.addEventListener("canplaythrough", ()=>{
+    console.log("stop.mp3 loaded");
+});
+
+winSound.addEventListener("canplaythrough", ()=>{
+    console.log("win.mp3 loaded");
+});
 
 // RANDOM SYMBOL
 
