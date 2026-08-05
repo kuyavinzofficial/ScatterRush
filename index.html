@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ScatterRush</title>
+<title>ScatterRush V4</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -13,7 +14,9 @@
 
 <body>
 
-<h1>🎰 ScatterRush</h1>
+<div class="container">
+
+<h1>🎰 ScatterRush 🎰</h1>
 
 <div id="stats">
 
@@ -38,40 +41,47 @@ Level
 </div>
 
 
-<div id="reels">
+<div id="gameBoard">
 
-<div class="reel">
-<img id="reel1" class="slotImage"
-src="assets/symbols/ivana.png">
+<div class="cell"><img id="cell0" class="slotImage"></div>
+<div class="cell"><img id="cell1" class="slotImage"></div>
+<div class="cell"><img id="cell2" class="slotImage"></div>
+<div class="cell"><img id="cell3" class="slotImage"></div>
+<div class="cell"><img id="cell4" class="slotImage"></div>
+
+<div class="cell"><img id="cell5" class="slotImage"></div>
+<div class="cell"><img id="cell6" class="slotImage"></div>
+<div class="cell"><img id="cell7" class="slotImage"></div>
+<div class="cell"><img id="cell8" class="slotImage"></div>
+<div class="cell"><img id="cell9" class="slotImage"></div>
+
+<div class="cell"><img id="cell10" class="slotImage"></div>
+<div class="cell"><img id="cell11" class="slotImage"></div>
+<div class="cell"><img id="cell12" class="slotImage"></div>
+<div class="cell"><img id="cell13" class="slotImage"></div>
+<div class="cell"><img id="cell14" class="slotImage"></div>
+
+<div class="cell"><img id="cell15" class="slotImage"></div>
+<div class="cell"><img id="cell16" class="slotImage"></div>
+<div class="cell"><img id="cell17" class="slotImage"></div>
+<div class="cell"><img id="cell18" class="slotImage"></div>
+<div class="cell"><img id="cell19" class="slotImage"></div>
+
 </div>
 
-<div class="reel">
-<img id="reel2" class="slotImage"
-src="assets/symbols/feheng.png">
-</div>
+<div id="controls">
 
-<div class="reel">
-<img id="reel3" class="slotImage"
-src="assets/symbols/hapon.png">
-</div>
+<button onclick="spin()">🎰 SPIN</button>
+
+<button onclick="dailyBonus()">🎁 BONUS</button>
+
+<button onclick="openShop()">🛒 SHOP</button>
 
 </div>
-
-
-<button onclick="spin()">
-🎰 SPIN
-</button>
-
-<button onclick="dailyBonus()">
-🎁 DAILY BONUS
-</button>
-
-<button onclick="openShop()">
-🛒 SHOP
-</button>
-
 
 <p id="message"></p>
+
+</div>
 
 <script src="script.js"></script>
 
