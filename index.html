@@ -317,7 +317,11 @@ display:none;
 <button onclick="dailyBonus()">
 🎁 DAILY BONUS
 </button>
-
+<button onclick="watchAd()">
+📺 WATCH AD
+<br>
++100 Coins
+</button>
 <button onclick="openShop()">
 🛒 SHOP
 </button>
@@ -859,7 +863,57 @@ changeTheme(savedTheme);
 }
 
 
+function watchAd(){
 
+
+document.getElementById("message").innerHTML =
+"📺 Watching Ad...";
+
+
+let timer=5;
+
+
+let countdown=setInterval(function(){
+
+
+document.getElementById("message").innerHTML =
+"📺 Ad: "+timer;
+
+
+timer--;
+
+
+
+if(timer<0){
+
+
+clearInterval(countdown);
+
+
+coins+=100;
+
+
+localStorage.setItem(
+"scatterCoins",
+coins
+);
+
+
+
+document.getElementById("message").innerHTML =
+"🎉 +100 Coins Reward!";
+
+
+updateUI();
+
+
+}
+
+
+},1000);
+
+
+  }
 </script>
 
 
