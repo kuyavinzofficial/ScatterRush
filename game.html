@@ -1,9 +1,204 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScatterRush</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-</body>
-</html>
+
+<div class="game-container">
+
+
+    <h1>SCATTERRUSH</h1>
+
+
+
+    <div class="info-panel">
+
+
+        <div>
+            <span>Free Spins</span>
+            <strong id="freeSpins">0</strong>
+        </div>
+
+
+        <div>
+            <span>Balance</span>
+            <strong id="balance">1000</strong>
+        </div>
+
+
+        <div>
+            <span>Bet</span>
+            <strong id="bet">10</strong>
+        </div>
+
+
+        <div>
+            <span>Win</span>
+            <strong id="win">0</strong>
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <div class="slot-machine">
+
+
+
+        <div class="reel" id="reel1">
+
+            <img src="assets/symbols/ivana.png">
+            <img src="assets/symbols/hapon.png">
+            <img src="assets/symbols/crown.png">
+
+        </div>
+
+
+
+        <div class="reel" id="reel2">
+
+            <img src="assets/symbols/moon.png">
+            <img src="assets/symbols/bell.png">
+            <img src="assets/symbols/wild.png">
+
+        </div>
+
+
+
+
+        <div class="reel" id="reel3">
+
+            <img src="assets/symbols/clover.png">
+            <img src="assets/symbols/parol.png">
+            <img src="assets/symbols/feheng.png">
+
+        </div>
+
+
+
+
+        <div class="reel" id="reel4">
+
+            <img src="assets/symbols/crown.png">
+            <img src="assets/symbols/ivana.png">
+            <img src="assets/symbols/hapon.png">
+
+        </div>
+
+
+
+
+        <div class="reel" id="reel5">
+
+            <img src="assets/symbols/moon.png">
+            <img src="assets/symbols/wild.png">
+            <img src="assets/symbols/feheng.png">
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+    <div class="lines">
+
+
+        <p>Paylines:</p>
+
+        <span>Line 1</span>
+        <span>Line 2</span>
+        <span>Line 3</span>
+
+
+    </div>
+
+
+
+
+
+    <button id="spinButton">
+
+        SPIN
+
+    </button>
+
+
+
+
+
+    <div id="message">
+
+        Good Luck!
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+<!-- FREE SPIN POPUP -->
+
+<div id="bonusPopup">
+
+
+    <h1>🎉 FREE SPINS!</h1>
+
+
+    <p id="bonusText">
+
+        Bonus Activated!
+
+    </p>
+
+
+</div>
+
+
+
+
+
+
+<!-- BIG WIN POPUP -->
+
+<div id="winPopup">
+
+
+    <h1>🔥 BIG WIN!</h1>
+
+
+    <p id="winAmount">
+
+        +0
+
+    </p>
+
+
+</div>
+
+
+
+
+
+
+<script src="auth.js"></script>
+<script src="save.js"></script>
+<script src="script.js"></script>
