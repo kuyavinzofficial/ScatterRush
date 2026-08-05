@@ -176,3 +176,71 @@ h1 {
     }
 
 }
+#bonusPopup,
+#winPopup {
+
+    display: none;
+
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%) scale(0);
+
+    background: rgba(0,0,0,0.9);
+
+    color: white;
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    z-index: 9999;
+
+    box-shadow: 0 0 30px gold;
+
+}
+
+
+#bonusPopup h1,
+#winPopup h1 {
+
+    font-size: 45px;
+
+    margin: 0;
+
+}
+
+
+#bonusPopup.show,
+#winPopup.show {
+
+    display: block;
+
+    animation: popupShow 0.5s forwards;
+
+}
+
+
+
+@keyframes popupShow {
+
+
+    from {
+
+        transform: translate(-50%, -50%) scale(0);
+
+    }
+
+
+    to {
+
+        transform: translate(-50%, -50%) scale(1);
+
+    }
+
+
+}
