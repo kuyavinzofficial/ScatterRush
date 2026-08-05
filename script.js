@@ -15,11 +15,12 @@ const soundPath = "./assets/sounds/";
 
 let balance = 1000;
 let bet = 10;
-
 let freeSpins = 0;
 let currentResult = [];
 let spinning = false;
 
+
+// ELEMENTS
 
 const reels = [
     document.getElementById("reel1"),
@@ -28,7 +29,6 @@ const reels = [
     document.getElementById("reel4"),
     document.getElementById("reel5")
 ];
-
 
 const balanceText = document.getElementById("balance");
 const winText = document.getElementById("win");
@@ -45,7 +45,10 @@ const stopSound = new Audio(soundPath + "stop.mp3");
 const freeSpinSound = new Audio(soundPath + "freespin.mp3");
 const spinSound = new Audio(soundPath + "spin.mp3");
 
+
 function playSound(sound){
+
+    if(!sound) return;
 
     sound.currentTime = 0;
 
@@ -54,9 +57,7 @@ function playSound(sound){
 }
 
 
-
-
-// WEIGHTED RANDOM SYMBOL
+// RANDOM SYMBOL
 
 function randomSymbol(){
 
@@ -95,6 +96,7 @@ function randomSymbol(){
 
 
 
+// SPIN FUNCTION
 
 function spin(){
 
@@ -105,8 +107,8 @@ function spin(){
     let freeMode = freeSpins > 0;
 
 
-
     if(!freeMode){
+
 
         if(balance < bet){
 
@@ -121,12 +123,15 @@ function spin(){
 
         balanceText.innerHTML = balance;
 
+
     }
     else{
+
 
         freeSpins--;
 
         freeSpinText.innerHTML = freeSpins;
+
 
     }
 
@@ -148,9 +153,6 @@ function spin(){
     reels.forEach((reel,index)=>{
 
 
-        let finalColumn=[];
-
-
         let animation = setInterval(()=>{
 
 
@@ -166,6 +168,7 @@ function spin(){
 
                 reel.appendChild(img);
 
+
             }
 
 
@@ -180,6 +183,10 @@ function spin(){
 
 
             reel.innerHTML="";
+
+
+            let finalColumn=[];
+
 
 
             for(let row=0;row<3;row++){
@@ -225,25 +232,24 @@ function spin(){
 
 
 
-        },1200 + (index*500));
+        },1200 + (index * 500));
 
 
 
     });
 
 
+
 }
 
 
 
-
-
+// SCATTER CHECK
 
 function checkScatter(){
 
 
-    let count=0;
-
+    let count = 0;
 
 
     currentResult.forEach(reel=>{
@@ -270,10 +276,9 @@ function checkScatter(){
 
 
         playSound(freeSpinSound);
-const spinSound = new Audio(soundPath + "spin.mp3");
 
-        let bonus=0;
 
+        let bonus;
 
 
         if(count===3){
@@ -281,13 +286,11 @@ const spinSound = new Audio(soundPath + "spin.mp3");
             bonus=8;
 
         }
-
         else if(count===4){
 
             bonus=15;
 
         }
-
         else{
 
             bonus=30;
@@ -302,7 +305,7 @@ const spinSound = new Audio(soundPath + "spin.mp3");
         freeSpinText.innerHTML = freeSpins;
 
 
-        message.innerHTML="🎉 FREE SPINS +"+bonus;
+        message.innerHTML="🎉 FREE SPINS +" + bonus;
 
 
     }
@@ -313,16 +316,16 @@ const spinSound = new Audio(soundPath + "spin.mp3");
 
 
 
-
-
-
+// WIN CHECK
 
 function checkWins(){
+
 
     let totalWin = 0;
 
 
-    let allSymbols = [
+    let allSymbols=[
+
         "ivana.png",
         "hapon.png",
         "moon.png",
@@ -330,35 +333,41 @@ function checkWins(){
         "bell.png",
         "parol.png",
         "crown.png"
+
     ];
 
 
 
     allSymbols.forEach(symbol=>{
 
-        let reelsMatched = 0;
-        let lastReel = -1;
+
+        let reelsMatched=0;
+
+        let lastReel=-1;
 
 
-        // hanapin kung ilang magkakasunod na reels
-        for(let col=0; col<currentResult.length; col++){
+
+        for(let col=0;col<currentResult.length;col++){
 
 
-            let found = false;
+            let found=false;
 
 
-            for(let row=0; row<3; row++){
+
+            for(let row=0;row<3;row++){
 
 
-                let item = currentResult[col][row];
+                let item=currentResult[col][row];
 
 
-                if(item === symbol || item === "wild.png"){
+                if(item===symbol || item==="wild.png"){
 
-                    found = true;
+                    found=true;
+
                     break;
 
                 }
+
 
             }
 
@@ -368,7 +377,8 @@ function checkWins(){
 
                 reelsMatched++;
 
-                lastReel = col;
+                lastReel=col;
+
 
             }
             else{
@@ -382,49 +392,46 @@ function checkWins(){
 
 
 
-        // payout base sa reels
-
-        if(reelsMatched >= 3){
+        if(reelsMatched>=3){
 
 
-            let win = 0;
+            let win=0;
 
 
-            if(reelsMatched === 3){
+            if(reelsMatched===3){
 
-                win = bet * 2;
+                win=bet*2;
 
             }
 
 
-            if(reelsMatched === 4){
+            if(reelsMatched===4){
 
-                win = bet * 5;
-
-            }
-
-
-            if(reelsMatched === 5){
-
-                win = bet * 15;
+                win=bet*5;
 
             }
 
 
+            if(reelsMatched===5){
 
-            // check extra katabing symbol +10%
+                win=bet*15;
+
+            }
+
+
 
             if(hasExtraNeighbor(symbol,lastReel)){
 
 
-                win = win * 1.10;
+                win*=1.10;
 
 
             }
 
 
 
-            totalWin += Math.floor(win);
+            totalWin+=Math.floor(win);
+
 
 
         }
@@ -435,16 +442,19 @@ function checkWins(){
 
 
 
-    if(totalWin > 0){
+    if(totalWin>0){
 
 
-        balance += totalWin;
+        balance+=totalWin;
 
-        balanceText.innerHTML = balance;
 
-        winText.innerHTML = totalWin;
+        balanceText.innerHTML=balance;
 
-        message.innerHTML = "🎉 WIN +" + totalWin;
+        winText.innerHTML=totalWin;
+
+
+        message.innerHTML="🎉 WIN +" + totalWin;
+
 
         playSound(winSound);
 
@@ -452,19 +462,20 @@ function checkWins(){
     }
 
 
+
 }
 
 
 
-
+// EXTRA SYMBOL BONUS
 
 function hasExtraNeighbor(symbol,lastReel){
 
 
-    let next = lastReel + 1;
+    let next=lastReel+1;
 
 
-    if(next >= currentResult.length){
+    if(next>=currentResult.length){
 
         return false;
 
@@ -472,12 +483,12 @@ function hasExtraNeighbor(symbol,lastReel){
 
 
 
-    for(let row=0; row<3; row++){
+    for(let row=0;row<3;row++){
 
 
         if(
-            currentResult[next][row] === symbol ||
-            currentResult[next][row] === "wild.png"
+            currentResult[next][row]===symbol ||
+            currentResult[next][row]==="wild.png"
         ){
 
             return true;
@@ -493,4 +504,9 @@ function hasExtraNeighbor(symbol,lastReel){
 
 
 }
+
+
+
+// BUTTON START
+
 spinButton.addEventListener("click", spin);
