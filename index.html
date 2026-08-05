@@ -6,7 +6,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+.spin:hover {
 
+    box-shadow:
+    0 0 30px gold;
+
+    transform:scale(1.05);
+
+}
+
+
+.spin:active {
+
+    animation:buttonPress .2s;
+
+}
+
+
+@keyframes buttonPress {
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(.85);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
 *{
     box-sizing:border-box;
 }
@@ -325,21 +356,37 @@ function checkResult(){
     let b=document.getElementById("r2").innerHTML;
     let c=document.getElementById("r3").innerHTML;
 
-
     let message="";
+    
+    let reels = document.querySelector(".reels");
+    let allReels = document.querySelectorAll(".reel");
 
 
     if(a==b && b==c){
 
         coins += 500;
+
         message="🎉 JACKPOT! +500 Coins";
+
+        reels.classList.add("shake");
+
+        allReels.forEach(function(item){
+            item.classList.add("win");
+        });
+
 
     }
 
     else if(a==b || a==c || b==c){
 
         coins += 50;
-        message="✨ WIN! +50 Coins";
+
+        message="✨ BIG WIN! +50 Coins";
+
+        allReels.forEach(function(item){
+            item.classList.add("win");
+        });
+
 
     }
 
@@ -357,6 +404,20 @@ function checkResult(){
 
     localStorage.setItem("scatterCoins",coins);
 
+
+    setTimeout(function(){
+
+        reels.classList.remove("shake");
+
+        allReels.forEach(function(item){
+
+            item.classList.remove("win");
+
+        });
+
+    },2000);
+
+
 }
 
 
@@ -364,4 +425,9 @@ function checkResult(){
 
 
 </body>
+    <audio id="spinSound" src="https://actions.google.com/sounds/v1/foley/metal_clang.ogg"></audio>
+
+<audio id="winSound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg"></audio>
+
+<audio id="jackpotSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 </html>
