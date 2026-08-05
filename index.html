@@ -328,7 +328,8 @@ transform:translateX(0);
 <button class="spin" onclick="spin()">
 
 SPIN
-
+<button class="spin" onclick="openShop()">
+🛒 SHOP
 </button>
 <button class="spin" onclick="dailyBonus()">
 
@@ -337,7 +338,19 @@ SPIN
 </button>
 
 <div id="message">
+<div id="shop" style="display:none;">
 
+<h2>🛒 Coin Shop</h2>
+
+<button class="spin" onclick="buyCoins()">
+Buy 1000 Coins
+</button>
+
+<button class="spin" onclick="closeShop()">
+Close Shop
+</button>
+
+</div>
 </div>
 
 
