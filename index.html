@@ -3,49 +3,80 @@
 <head>
 <title>ScatterRush</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
+
 body {
-    margin: 0;
-    background: linear-gradient(135deg,#111,#333);
+    margin:0;
+    padding:0;
+    background: radial-gradient(circle,#333,#000);
     color:white;
-    font-family: Arial, sans-serif;
+    font-family:Arial, sans-serif;
     text-align:center;
+}
+
+.container {
+    max-width:420px;
+    margin:auto;
+    padding:20px;
 }
 
 h1 {
     color:#ffd700;
-    font-size:40px;
+    font-size:38px;
+    text-shadow:0 0 15px #ffd700;
 }
 
-.game {
-    margin-top:50px;
+.coins {
+    font-size:22px;
+    margin:20px;
+}
+
+.machine {
+    background:#111;
+    border:5px solid #ffd700;
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 0 25px #ffd700;
 }
 
 .reels {
-    background:#000;
-    padding:25px;
-    border-radius:20px;
-    display:inline-block;
-    font-size:55px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
 }
 
-button {
+.reel {
+    background:white;
+    color:black;
+    width:80px;
+    height:80px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+}
+
+.spin {
     margin-top:30px;
-    padding:15px 50px;
-    font-size:22px;
+    padding:15px 60px;
+    font-size:25px;
+    font-weight:bold;
     border:none;
     border-radius:15px;
     background:#ffd700;
-    cursor:pointer;
 }
 
-button:hover {
-    transform:scale(1.05);
+.spin:active {
+    transform:scale(.95);
 }
 
 #message {
-    font-size:25px;
     margin-top:20px;
+    font-size:25px;
+    min-height:40px;
 }
 
 </style>
@@ -54,90 +85,26 @@ button:hover {
 
 <body>
 
+<div class="container">
+
 <h1>🎰 ScatterRush</h1>
 
-<div class="game">
-
-<h2>🪙 Coins: <span id="coins">1000</span></h2>
-
-<div class="reels">
-<span id="r1">❓</span>
-<span id="r2">❓</span>
-<span id="r3">❓</span>
+<div class="coins">
+🪙 Coins: <span id="coins">1000</span>
 </div>
 
-<br>
+<div class="machine">
 
-<button onclick="spin()">SPIN</button>
+<div class="reels">
+
+<div class="reel" id="r1">❓</div>
+<div class="reel" id="r2">❓</div>
+<div class="reel" id="r3">❓</div>
+
+</div>
+
+<button class="spin" onclick="spin()">SPIN</button>
 
 <div id="message"></div>
 
 </div>
-
-
-<script>
-
-let coins = 1000;
-
-let items = [
-"🍒",
-"🍋",
-"🍉",
-"⭐",
-"💎",
-"7️⃣"
-];
-
-
-function spin(){
-
-if(coins < 10){
-document.getElementById("message").innerHTML="No more coins!";
-return;
-}
-
-coins -= 10;
-
-
-let a = items[Math.floor(Math.random()*items.length)];
-let b = items[Math.floor(Math.random()*items.length)];
-let c = items[Math.floor(Math.random()*items.length)];
-
-
-document.getElementById("r1").innerHTML=a;
-document.getElementById("r2").innerHTML=b;
-document.getElementById("r3").innerHTML=c;
-
-
-let msg="";
-
-
-if(a==b && b==c){
-
-coins += 500;
-msg="🎉 JACKPOT! +500 coins";
-
-}
-else if(a==b || b==c || a==c){
-
-coins += 50;
-msg="✨ WIN! +50 coins";
-
-}
-else{
-
-msg="😢 Try Again";
-
-}
-
-
-document.getElementById("coins").innerHTML=coins;
-document.getElementById("message").innerHTML=msg;
-
-
-}
-
-</script>
-
-</body>
-</html>
