@@ -269,7 +269,7 @@ function checkScatter(){
     if(count>=3){
 
 
-        playSound(scatterSound);
+        playSound(freeSpinSound);
 
 
         let bonus=0;
