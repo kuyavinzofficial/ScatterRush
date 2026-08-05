@@ -10,20 +10,15 @@ const symbols = [
     "wild.png"
 ];
 
-
 const imagePath = "./assets/symbols/";
 const soundPath = "./assets/sounds/";
-
 
 let balance = 1000;
 let bet = 10;
 
 let freeSpins = 0;
-
 let currentResult = [];
-
 let spinning = false;
-
 
 
 const reels = [
@@ -42,14 +37,6 @@ const message = document.getElementById("message");
 const spinButton = document.getElementById("spinButton");
 
 
-// POPUPS
-const bonusPopup = document.getElementById("bonusPopup");
-const winPopup = document.getElementById("winPopup");
-
-const winAmount = document.getElementById("winAmount");
-
-
-
 // SOUNDS
 
 const spinSound = new Audio(soundPath + "spin.mp3");
@@ -59,11 +46,7 @@ const scatterSound = new Audio(soundPath + "scatter.mp3");
 
 
 
-
-
 function playSound(sound){
-
-    if(!sound) return;
 
     sound.currentTime = 0;
 
@@ -74,11 +57,9 @@ function playSound(sound){
 
 
 
-
-// SYMBOL RANDOM WITH WEIGHT
+// WEIGHTED RANDOM SYMBOL
 
 function randomSymbol(){
-
 
     let pool = [
 
@@ -116,8 +97,6 @@ function randomSymbol(){
 
 
 
-
-
 function spin(){
 
 
@@ -129,7 +108,6 @@ function spin(){
 
 
     if(!freeMode){
-
 
         if(balance < bet){
 
@@ -144,15 +122,12 @@ function spin(){
 
         balanceText.innerHTML = balance;
 
-
     }
     else{
-
 
         freeSpins--;
 
         freeSpinText.innerHTML = freeSpins;
-
 
     }
 
@@ -160,40 +135,24 @@ function spin(){
 
     spinning = true;
 
+    currentResult = [];
 
-    currentResult=[];
+    winText.innerHTML = 0;
 
-
-    winText.innerHTML="0";
-
-
-    message.innerHTML="SPINNING...";
+    message.innerHTML = "SPINNING...";
 
 
     playSound(spinSound);
 
 
 
-    spinReels();
-
-
-}
-
-
-
-
-
-
-function spinReels(){
-
-
     reels.forEach((reel,index)=>{
 
 
-        let result=[];
+        let finalColumn=[];
 
 
-        let timer=setInterval(()=>{
+        let animation = setInterval(()=>{
 
 
             reel.innerHTML="";
@@ -218,7 +177,7 @@ function spinReels(){
         setTimeout(()=>{
 
 
-            clearInterval(timer);
+            clearInterval(animation);
 
 
             reel.innerHTML="";
@@ -230,7 +189,7 @@ function spinReels(){
                 let symbol=randomSymbol();
 
 
-                result.push(symbol);
+                finalColumn.push(symbol);
 
 
 
@@ -244,7 +203,8 @@ function spinReels(){
             }
 
 
-            currentResult[index]=result;
+
+            currentResult[index]=finalColumn;
 
 
             playSound(stopSound);
@@ -266,15 +226,24 @@ function spinReels(){
 
 
 
-        },1200+(index*500));
+        },1200 + (index*500));
 
 
 
     });
+
+
+}
+
+
+
+
+
+
 function checkScatter(){
 
 
-    let scatterCount = 0;
+    let count=0;
 
 
 
@@ -284,9 +253,9 @@ function checkScatter(){
         reel.forEach(symbol=>{
 
 
-            if(symbol === "feheng.png"){
+            if(symbol==="feheng.png"){
 
-                scatterCount++;
+                count++;
 
             }
 
@@ -298,29 +267,31 @@ function checkScatter(){
 
 
 
-    if(scatterCount >= 3){
+    if(count>=3){
 
 
         playSound(scatterSound);
 
 
+        let bonus=0;
 
-        let bonus = 0;
 
 
-        if(scatterCount === 3){
+        if(count===3){
 
-            bonus = 8;
-
-        }
-        else if(scatterCount === 4){
-
-            bonus = 15;
+            bonus=8;
 
         }
-        else if(scatterCount >= 5){
 
-            bonus = 30;
+        else if(count===4){
+
+            bonus=15;
+
+        }
+
+        else{
+
+            bonus=30;
 
         }
 
@@ -332,15 +303,11 @@ function checkScatter(){
         freeSpinText.innerHTML = freeSpins;
 
 
-        message.innerHTML = "🎉 FREE SPINS ACTIVATED!";
-
-
-
-        showBonusPopup(bonus);
-
+        message.innerHTML="🎉 FREE SPINS +"+bonus;
 
 
     }
+
 
 
 }
@@ -354,25 +321,23 @@ function checkScatter(){
 function checkWins(){
 
 
-    let totalWin = 0;
+    let totalWin=0;
 
 
 
-    for(let row = 0; row < 3; row++){
+    for(let row=0;row<3;row++){
 
 
         let line=[];
 
 
-
-        for(let reel=0; reel<5; reel++){
+        for(let reel=0;reel<5;reel++){
 
 
             line.push(currentResult[reel][row]);
 
 
         }
-
 
 
         totalWin += calculateLine(line);
@@ -383,34 +348,22 @@ function checkWins(){
 
 
 
-
-    if(totalWin > 0){
+    if(totalWin>0){
 
 
         balance += totalWin;
 
 
-        balanceText.innerHTML = balance;
+        balanceText.innerHTML=balance;
 
 
-        winText.innerHTML = totalWin;
+        winText.innerHTML=totalWin;
 
 
-
-        message.innerHTML = "WIN +" + totalWin;
-
+        message.innerHTML="🎉 WIN "+totalWin;
 
 
         playSound(winSound);
-
-
-
-        if(totalWin >= bet * 10){
-
-            showWinPopup(totalWin);
-
-        }
-
 
 
     }
@@ -428,16 +381,28 @@ function checkWins(){
 function calculateLine(line){
 
 
-    let firstSymbol = null;
+    let first=null;
 
-    let count = 0;
+    let count=0;
+
 
 
     for(let symbol of line){
 
 
 
-        if(symbol === "feheng.png"){
+        if(symbol==="feheng.png"){
+
+            continue;
+
+        }
+
+
+
+        if(symbol==="wild.png"){
+
+
+            count++;
 
             continue;
 
@@ -446,41 +411,27 @@ function calculateLine(line){
 
 
 
-        if(symbol === "wild.png"){
+        if(first===null){
+
+
+            first=symbol;
+
+            count++;
+
+        }
+
+        else if(symbol===first){
 
 
             count++;
 
-            continue;
-
-
         }
 
-
-
-
-        if(firstSymbol === null){
-
-
-            firstSymbol = symbol;
-
-            count++;
-
-
-        }
-        else if(symbol === firstSymbol){
-
-
-            count++;
-
-
-        }
         else{
 
 
             break;
 
-
         }
 
 
@@ -488,41 +439,33 @@ function calculateLine(line){
 
 
 
-    if(count === 3){
-
+    if(count===3){
 
         return bet * 2;
 
-
     }
 
 
 
-    if(count === 4){
-
+    if(count===4){
 
         return bet * 5;
 
-
     }
 
 
 
-    if(count >= 5){
+    if(count>=5){
 
 
-        if(line.every(symbol=>symbol==="wild.png")){
-
+        if(line.every(x=>x==="wild.png")){
 
             return bet * 50;
-
 
         }
 
 
-
         return bet * 15;
-
 
     }
 
@@ -530,7 +473,6 @@ function calculateLine(line){
 
     return 0;
 
-
 }
 
 
@@ -538,84 +480,4 @@ function calculateLine(line){
 
 
 
-
-function showBonusPopup(amount){
-
-
-    if(!bonusPopup) return;
-
-
-    bonusPopup.classList.add("show");
-
-
-    let text=document.getElementById("bonusText");
-
-
-    if(text){
-
-        text.innerHTML = amount + " FREE SPINS";
-
-    }
-
-
-
-    setTimeout(()=>{
-
-
-        bonusPopup.classList.remove("show");
-
-
-    },3000);
-
-
-
-}
-
-
-
-
-
-
-
-
-function showWinPopup(amount){
-
-
-    if(!winPopup) return;
-
-
-
-    winPopup.classList.add("show");
-
-
-
-    if(winAmount){
-
-        winAmount.innerHTML="+" + amount;
-
-    }
-
-
-
-
-    setTimeout(()=>{
-
-
-        winPopup.classList.remove("show");
-
-
-    },3000);
-
-
-
-}
-
-
-
-
-
-
-
-spinButton.addEventListener("click", spin);
-
-}
+spinButton.addEventListener("click",spin);
