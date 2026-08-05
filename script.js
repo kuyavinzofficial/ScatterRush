@@ -39,20 +39,33 @@ const spinButton = document.getElementById("spinButton");
 
 // SOUNDS
 
-const bigWinSound = new Audio(soundPath + "bigwin.mp3");
-const winSound = new Audio(soundPath + "win.mp3");
-const stopSound = new Audio(soundPath + "stop.mp3");
-const freeSpinSound = new Audio(soundPath + "freespin.mp3");
-const spinSound = new Audio(soundPath + "spin.mp3");
+const spinSound = new Audio("./assets/sounds/spin.mp3");
+const stopSound = new Audio("./assets/sounds/stop.mp3");
+const winSound = new Audio("./assets/sounds/win.mp3");
+const bigWinSound = new Audio("./assets/sounds/bigwin.mp3");
+const freeSpinSound = new Audio("./assets/sounds/freespin.mp3");
 
+
+spinSound.volume = 0.5;
+stopSound.volume = 0.5;
+winSound.volume = 0.5;
+bigWinSound.volume = 0.5;
+freeSpinSound.volume = 0.5;
 
 function playSound(sound){
 
     if(!sound) return;
 
+    sound.pause();
     sound.currentTime = 0;
 
-    sound.play().catch(()=>{});
+    sound.play()
+    .then(()=>{
+        console.log("Playing sound");
+    })
+    .catch((error)=>{
+        console.log("Audio blocked:", error);
+    });
 
 }
 
