@@ -1,205 +1,229 @@
-// =======================
-// ScatterRush V3 Engine
-// =======================
-
-let coins = Number(localStorage.getItem("scatterCoins")) || 1000;
-let xp = Number(localStorage.getItem("scatterXP")) || 0;
-let level = Number(localStorage.getItem("scatterLevel")) || 1;
-
-let spinning = false;
-
 const symbols = [
-    "assets/symbols/ivana.png",
-    "assets/symbols/feheng.png",
-    "assets/symbols/hapon.png"
+    "symbol1.png",
+    "symbol2.png",
+    "symbol3.png",
+    "symbol4.png",
+    "symbol5.png",
+    "symbol6.png",
+    "symbol7.png",
+    "symbol8.png",
+    "symbol9.png",
+    "wild.png"
 ];
 
-// Chance ng bawat symbol
+
+let balance = 1000;
+let bet = 10;
+
+const reels = [
+    document.getElementById("reel1"),
+    document.getElementById("reel2"),
+    document.getElementById("reel3"),
+    document.getElementById("reel4"),
+    document.getElementById("reel5")
+];
+
+
+const balanceText = document.getElementById("balance");
+const winText = document.getElementById("win");
+const message = document.getElementById("message");
+const spinButton = document.getElementById("spinButton");
+
+
+let currentResult = [];
+
+
+
 function randomSymbol(){
 
-    const chance = Math.random();
+    let random = Math.floor(Math.random() * symbols.length);
 
-    if(chance < 0.45){
-        return symbols[0]; // ivana
-    }
-
-    if(chance < 0.80){
-        return symbols[1]; // feheng
-    }
-
-    return symbols[2]; // hapon
+    return symbols[random];
 
 }
 
-const payouts = {
-    "assets/symbols/ivana.png":30,
-    "assets/symbols/feheng.png":80,
-    "assets/symbols/hapon.png":200
-};
 
-function updateUI(){
 
-    document.getElementById("coins").textContent = coins;
-    document.getElementById("xp").textContent = xp;
-    document.getElementById("level").textContent = level;
-
-}
 
 function spin(){
 
-    if(spinning) return;
+    if(balance < bet){
 
-    if(coins < 10){
-
-        document.getElementById("message").innerHTML =
-        "❌ Not enough Coins";
-
+        message.innerHTML = "Not enough balance!";
         return;
 
     }
 
-    spinning = true;
 
-    coins -= 10;
+    balance -= bet;
 
-    updateUI();
+    balanceText.innerHTML = balance;
 
-    document.getElementById("message").innerHTML =
-    "🎰 Spinning...";
+    winText.innerHTML = 0;
 
-    const reel1 = document.getElementById("reel1");
-    const reel2 = document.getElementById("reel2");
-    const reel3 = document.getElementById("reel3");
 
-    const spin1 = setInterval(()=>{
-        reel1.src=randomSymbol();
-    },80);
+    currentResult = [];
 
-    const spin2 = setInterval(()=>{
-        reel2.src=randomSymbol();
-    },80);
 
-    const spin3 = setInterval(()=>{
-        reel3.src=randomSymbol();
-    },80);
+    reels.forEach((reel,index)=>{
 
-    let r1,r2,r3;
 
-    setTimeout(()=>{
+        reel.innerHTML="";
 
-        clearInterval(spin1);
+        let reelResult=[];
 
-        r1=randomSymbol();
 
-        reel1.src=r1;
+        for(let row=0; row<3; row++){
 
-    },1200);
+            let symbol=randomSymbol();
 
-    setTimeout(()=>{
+            reelResult.push(symbol);
 
-        clearInterval(spin2);
 
-        r2=randomSymbol();
+            let img=document.createElement("img");
 
-        reel2.src=r2;
+            img.src="symbols/"+symbol;
 
-    },1800);
-
-    setTimeout(()=>{
-
-        clearInterval(spin3);
-
-        r3=randomSymbol();
-
-        reel3.src=r3;
-
-        checkWin(r1,r2,r3);
-
-        spinning=false;
-
-    },2400);
-
-}
-
-function checkWin(a,b,c){
-
-    if(a===b && b===c){
-
-        let reward=payouts[a];
-
-        coins+=reward;
-
-        xp+=25;
-
-        if(xp>=100){
-
-            xp=0;
-
-            level++;
+            reel.appendChild(img);
 
         }
 
-        document.getElementById("message").innerHTML =
-        "🎉 YOU WIN! +" + reward + " Coins";
 
-        document.querySelectorAll(".reel").forEach(r=>{
-            r.classList.add("win");
-        });
+        currentResult.push(reelResult);
 
-        setTimeout(()=>{
 
-            document.querySelectorAll(".reel").forEach(r=>{
-                r.classList.remove("win");
-            });
+    });
 
-        },1500);
 
-    }else{
 
-        document.getElementById("message").innerHTML =
-        "😢 Try Again";
+    checkWin();
+
+
+}
+
+
+
+
+
+function checkWin(){
+
+
+    let totalWin=0;
+
+
+
+    // LINE 1 - TOP ROW
+    let line1=[];
+
+    for(let i=0;i<5;i++){
+
+        line1.push(currentResult[i][0]);
 
     }
 
-    saveGame();
 
-    updateUI();
+    totalWin += calculateLine(line1);
+
+
+
+    // LINE 2 - MIDDLE ROW
+    let line2=[];
+
+    for(let i=0;i<5;i++){
+
+        line2.push(currentResult[i][1]);
+
+    }
+
+
+    totalWin += calculateLine(line2);
+
+
+
+
+    // LINE 3 - BOTTOM ROW
+    let line3=[];
+
+    for(let i=0;i<5;i++){
+
+        line3.push(currentResult[i][2]);
+
+    }
+
+
+    totalWin += calculateLine(line3);
+
+
+
+    if(totalWin>0){
+
+        balance += totalWin;
+
+        winText.innerHTML=totalWin;
+
+        balanceText.innerHTML=balance;
+
+        message.innerHTML="🎉 WIN "+totalWin+"!";
+
+    }
+    else{
+
+        message.innerHTML="Try Again!";
+
+    }
+
 
 }
 
-function dailyBonus(){
 
-    coins += 100;
 
-    document.getElementById("message").innerHTML =
-    "🎁 Daily Bonus +100 Coins";
 
-    saveGame();
+function calculateLine(line){
 
-    updateUI();
+
+    let first=line[0];
+
+    let count=1;
+
+
+
+    for(let i=1;i<line.length;i++){
+
+
+        if(line[i]===first || line[i]==="wild.png"){
+
+            count++;
+
+        }
+        else if(first==="wild.png"){
+
+            first=line[i];
+            count++;
+
+        }
+        else{
+
+            break;
+
+        }
+
+    }
+
+
+
+    if(count>=3){
+
+        return count*bet;
+
+    }
+
+
+    return 0;
+
 
 }
 
-function openShop(){
 
-    alert(`🛒 SHOP
 
-1000 Coins = ₱49
 
-5000 Coins = ₱199
-
-10000 Coins = ₱399
-
-Coming Soon`);
-
-}
-
-function saveGame(){
-
-    localStorage.setItem("scatterCoins",coins);
-    localStorage.setItem("scatterXP",xp);
-    localStorage.setItem("scatterLevel",level);
-
-}
-
-updateUI();
+spinButton.addEventListener("click",spin);
