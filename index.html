@@ -108,3 +108,123 @@ h1 {
 <div id="message"></div>
 
 </div>
+<script>
+
+let coins = localStorage.getItem("scatterCoins");
+
+if(coins === null){
+    coins = 1000;
+} else {
+    coins = Number(coins);
+}
+
+document.getElementById("coins").innerHTML = coins;
+
+
+let symbols = [
+    "🍒",
+    "🍋",
+    "🍉",
+    "⭐",
+    "💎",
+    "7️⃣"
+];
+
+
+function randomSymbol(){
+
+    return symbols[Math.floor(Math.random()*symbols.length)];
+
+}
+
+
+function spin(){
+
+    if(coins < 10){
+
+        document.getElementById("message").innerHTML =
+        "❌ Not enough coins";
+
+        return;
+    }
+
+
+    coins -= 10;
+
+
+    let r1 = document.getElementById("r1");
+    let r2 = document.getElementById("r2");
+    let r3 = document.getElementById("r3");
+
+
+    let count = 0;
+
+
+    let animation = setInterval(function(){
+
+        r1.innerHTML = randomSymbol();
+        r2.innerHTML = randomSymbol();
+        r3.innerHTML = randomSymbol();
+
+        count++;
+
+        if(count >= 15){
+
+            clearInterval(animation);
+
+            finishSpin();
+
+        }
+
+    },100);
+
+
+}
+
+
+function finishSpin(){
+
+    let a = document.getElementById("r1").innerHTML;
+    let b = document.getElementById("r2").innerHTML;
+    let c = document.getElementById("r3").innerHTML;
+
+
+    let message="";
+
+
+    if(a==b && b==c){
+
+        coins += 500;
+        message="🎉 JACKPOT! +500 Coins";
+
+    }
+
+    else if(a==b || b==c || a==c){
+
+        coins += 50;
+        message="✨ WIN! +50 Coins";
+
+    }
+
+    else{
+
+        message="😢 Try Again";
+
+    }
+
+
+    document.getElementById("coins").innerHTML = coins;
+
+    document.getElementById("message").innerHTML = message;
+
+
+    localStorage.setItem("scatterCoins",coins);
+
+}
+
+
+</script>
+
+
+</body>
+</html>
