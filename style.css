@@ -1,210 +1,178 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    background:#111;
-    background:linear-gradient(to bottom,#1a1a1a,#000);
-    color:white;
-    text-align:center;
+body {
+    background: radial-gradient(circle, #333, #000);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.container{
-    width:100%;
-    max-width:700px;
-    margin:auto;
-    padding:20px;
+
+.game-container {
+    width: 95%;
+    max-width: 500px;
+    text-align: center;
+    background: #111;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px gold;
 }
 
-h1{
-    color:gold;
-    margin-bottom:20px;
-    text-shadow:0 0 12px gold;
+
+h1 {
+    color: gold;
+    margin-bottom: 15px;
+    font-size: 32px;
 }
 
-#stats{
 
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    margin-bottom:20px;
-    flex-wrap:wrap;
-
+.info-panel {
+    display: flex;
+    justify-content: space-around;
+    background: #222;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-.card{
 
-    background:#222;
-    border:2px solid gold;
-    border-radius:12px;
-    padding:12px;
-    width:100px;
-
+.info-panel div {
+    display: flex;
+    flex-direction: column;
 }
 
-.card span{
 
-    display:block;
-    margin-top:5px;
-    font-size:24px;
-    color:#00ff99;
-    font-weight:bold;
-
+.info-panel span {
+    color: #aaa;
+    font-size: 14px;
 }
 
-#gameBoard{
 
-    display:grid;
-
-    grid-template-columns:repeat(5,1fr);
-
-    gap:10px;
-
-    margin:25px auto;
-
+.info-panel strong {
+    color: gold;
+    font-size: 20px;
 }
 
-.cell{
 
-    aspect-ratio:1/1;
 
-    background:#2a2a2a;
-
-    border:3px solid gold;
-
-    border-radius:12px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    overflow:hidden;
-
-    box-shadow:0 0 10px rgba(255,215,0,.35);
-
-    transition:.25s;
-
+.slot-machine {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    background: #050505;
+    padding: 15px;
+    border-radius: 15px;
+    border: 3px solid gold;
 }
 
-.cell:hover{
 
-    transform:scale(1.05);
 
+.reel {
+    width: 55px;
+    height: 180px;
+    overflow: hidden;
+    background: white;
+    border-radius: 8px;
 }
 
-.slotImage{
 
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
+.reel img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    display: block;
+    border-bottom: 1px solid #ddd;
 }
 
-#controls{
 
-    margin-top:25px;
 
+.lines {
+    margin-top: 20px;
+    color: white;
 }
 
-button{
 
-    background:gold;
-
-    color:black;
-
-    border:none;
-
-    border-radius:10px;
-
-    padding:14px 22px;
-
-    margin:8px;
-
-    cursor:pointer;
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    transition:.2s;
-
+.lines p {
+    color: gold;
+    font-weight: bold;
 }
 
-button:hover{
 
-    transform:scale(1.08);
-
+.lines span {
+    display: inline-block;
+    background: #333;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
 }
 
-button:active{
 
-    transform:scale(.95);
 
+#spinButton {
+    margin-top: 25px;
+    width: 200px;
+    padding: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(#ffcc00,#ff6600);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px black;
 }
 
-#message{
 
-    margin-top:20px;
-
-    font-size:22px;
-
-    min-height:35px;
-
-    color:#00ff99;
-
+#spinButton:active {
+    transform: scale(0.95);
 }
 
-.win{
 
-    animation:winGlow .5s infinite alternate;
 
+#message {
+    margin-top: 20px;
+    font-size: 22px;
+    color: gold;
+    min-height: 30px;
 }
 
-@keyframes winGlow{
 
-from{
 
-box-shadow:0 0 10px gold;
+/* Mobile adjustment */
 
-}
+@media(max-width:400px){
 
-to{
+    .game-container {
+        padding: 15px;
+    }
 
-box-shadow:0 0 30px orange;
 
-}
+    h1 {
+        font-size: 25px;
+    }
 
-}
 
-@media(max-width:700px){
+    .reel {
+        width: 45px;
+        height: 150px;
+    }
 
-.container{
 
-padding:10px;
+    .reel img {
+        width:45px;
+        height:45px;
+    }
 
-}
 
-.card{
-
-width:90px;
-
-}
-
-button{
-
-width:95%;
-
-margin:6px auto;
-
-display:block;
-
-}
+    #spinButton {
+        width:160px;
+    }
 
 }
