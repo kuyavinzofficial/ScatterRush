@@ -81,7 +81,7 @@ function spin(){
 
             let img=document.createElement("img");
 
-            img.src="symbols/" + symbol;
+            img.src="assets/symbols/" + symbol;
 
             img.alt=symbol;
 
