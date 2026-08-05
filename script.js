@@ -47,7 +47,44 @@ const scatterSound = new Audio(soundPath + "scatter.mp3");
 
 function randomSymbol(){
 
-    return symbols[Math.floor(Math.random()*symbols.length)];
+    const weightedSymbols = [
+        "ivana.png",
+        "ivana.png",
+        "ivana.png",
+        "ivana.png",
+
+        "hapon.png",
+        "hapon.png",
+        "hapon.png",
+        "hapon.png",
+
+        "moon.png",
+        "moon.png",
+        "moon.png",
+        "moon.png",
+
+        "clover.png",
+        "clover.png",
+        "clover.png",
+
+        "bell.png",
+        "bell.png",
+        "bell.png",
+
+        "parol.png",
+        "parol.png",
+
+        "crown.png",
+
+        "wild.png",
+
+        "feheng.png"
+    ];
+
+
+    return weightedSymbols[
+        Math.floor(Math.random()*weightedSymbols.length)
+    ];
 
 }
 
