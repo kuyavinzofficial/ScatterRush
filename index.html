@@ -327,40 +327,40 @@ display:none;
 
 
 <div id="shop" class="card hidden">
+<div id="shop" class="card hidden">
 
-<h2>🛒 SHOP</h2>
+<h2>🛒 ScatterRush Shop</h2>
+
+<p>Buy Coins</p>
 
 
-<button onclick="buyCoins()">
-+1000 🪙 Coins
+<button onclick="purchase(1000)">
+🪙 1,000 Coins
+<br>
+₱49
 </button>
 
 
-<h3>🎨 Themes</h3>
-
-
-<button onclick="changeTheme('gold')">
-🟡 Gold
+<button onclick="purchase(5000)">
+🪙 5,000 Coins
+<br>
+₱199
 </button>
 
 
-<button onclick="changeTheme('diamond')">
-💎 Diamond
-</button>
-
-
-<button onclick="changeTheme('neon')">
-🟣 Neon
+<button onclick="purchase(10000)">
+🪙 10,000 Coins
+<br>
+₱399
 </button>
 
 
 <button onclick="closeShop()">
-❌ Close
+❌ Close Shop
 </button>
 
 
 </div>
-
 
 
 <div class="card">
@@ -747,9 +747,25 @@ document.getElementById("shop")
 
 
 
-function buyCoins(){
+function purchase(amount){
 
-coins+=1000;
+let confirmBuy =
+confirm(
+"Purchase "+amount+" Coins?"
+);
+
+
+if(confirmBuy){
+
+
+document.getElementById("message").innerHTML =
+"💳 Payment processing...";
+
+
+setTimeout(function(){
+
+
+coins += amount;
 
 
 localStorage.setItem(
@@ -759,13 +775,19 @@ coins
 
 
 document.getElementById("message").innerHTML =
-"🛒 +1000 Coins Added";
+"✅ Coins Added!";
 
 
 updateUI();
 
+
+},1500);
+
+
 }
 
+
+  }
 
 
 
