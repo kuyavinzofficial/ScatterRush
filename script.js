@@ -1,13 +1,12 @@
 const symbols = [
-    "symbol1.png",
-    "symbol2.png",
-    "symbol3.png",
-    "symbol4.png",
-    "symbol5.png",
-    "symbol6.png",
-    "symbol7.png",
-    "symbol8.png",
-    "symbol9.png",
+    "ivana.png",
+    "hapon.png",
+    "feheng.png",
+    "moon.png",
+    "clover.png",
+    "bell.png",
+    "parol.png",
+    "crown.png",
     "wild.png"
 ];
 
@@ -65,7 +64,7 @@ function spin(){
     currentResult = [];
 
 
-    reels.forEach((reel,index)=>{
+    reels.forEach((reel)=>{
 
 
         reel.innerHTML="";
@@ -82,7 +81,9 @@ function spin(){
 
             let img=document.createElement("img");
 
-            img.src="symbols/"+symbol;
+            img.src="symbols/" + symbol;
+
+            img.alt=symbol;
 
             reel.appendChild(img);
 
@@ -104,15 +105,13 @@ function spin(){
 
 
 
-
 function checkWin(){
 
 
     let totalWin=0;
 
 
-
-    // LINE 1 - TOP ROW
+    // LINE 1 - TOP
     let line1=[];
 
     for(let i=0;i<5;i++){
@@ -121,12 +120,11 @@ function checkWin(){
 
     }
 
-
     totalWin += calculateLine(line1);
 
 
 
-    // LINE 2 - MIDDLE ROW
+    // LINE 2 - MIDDLE
     let line2=[];
 
     for(let i=0;i<5;i++){
@@ -135,13 +133,11 @@ function checkWin(){
 
     }
 
-
     totalWin += calculateLine(line2);
 
 
 
-
-    // LINE 3 - BOTTOM ROW
+    // LINE 3 - BOTTOM
     let line3=[];
 
     for(let i=0;i<5;i++){
@@ -150,25 +146,24 @@ function checkWin(){
 
     }
 
-
     totalWin += calculateLine(line3);
 
 
 
-    if(totalWin>0){
+    if(totalWin > 0){
 
         balance += totalWin;
 
-        winText.innerHTML=totalWin;
+        balanceText.innerHTML = balance;
 
-        balanceText.innerHTML=balance;
+        winText.innerHTML = totalWin;
 
-        message.innerHTML="🎉 WIN "+totalWin+"!";
+        message.innerHTML = "🎉 WIN " + totalWin + "!";
 
     }
     else{
 
-        message.innerHTML="Try Again!";
+        message.innerHTML = "TRY AGAIN";
 
     }
 
@@ -181,23 +176,31 @@ function checkWin(){
 function calculateLine(line){
 
 
-    let first=line[0];
-
-    let count=1;
-
+    let firstSymbol = null;
+    let count = 0;
 
 
-    for(let i=1;i<line.length;i++){
+
+    for(let symbol of line){
 
 
-        if(line[i]===first || line[i]==="wild.png"){
+        if(symbol === "wild.png"){
 
             count++;
 
-        }
-        else if(first==="wild.png"){
+            continue;
 
-            first=line[i];
+        }
+
+
+        if(firstSymbol === null){
+
+            firstSymbol = symbol;
+            count++;
+
+        }
+        else if(symbol === firstSymbol){
+
             count++;
 
         }
@@ -207,23 +210,22 @@ function calculateLine(line){
 
         }
 
+
     }
 
 
 
-    if(count>=3){
+    if(count >= 3){
 
-        return count*bet;
+        return count * bet;
 
     }
 
 
     return 0;
 
-
 }
 
 
 
-
-spinButton.addEventListener("click",spin);
+spinButton.addEventListener("click", spin);
