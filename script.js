@@ -320,48 +320,132 @@ function checkScatter(){
 
 function checkWins(){
 
-
-    let totalWin=0;
-
+    let totalWin = 0;
 
 
-    for(let row=0;row<3;row++){
+    let allSymbols = [
+        "ivana.png",
+        "hapon.png",
+        "moon.png",
+        "clover.png",
+        "bell.png",
+        "parol.png",
+        "crown.png"
+    ];
 
 
-        let line=[];
+
+    allSymbols.forEach(symbol=>{
+
+        let reelsMatched = 0;
+        let lastReel = -1;
 
 
-        for(let reel=0;reel<5;reel++){
+        // hanapin kung ilang magkakasunod na reels
+        for(let col=0; col<currentResult.length; col++){
 
 
-            line.push(currentResult[reel][row]);
+            let found = false;
+
+
+            for(let row=0; row<3; row++){
+
+
+                let item = currentResult[col][row];
+
+
+                if(item === symbol || item === "wild.png"){
+
+                    found = true;
+                    break;
+
+                }
+
+            }
+
+
+
+            if(found){
+
+                reelsMatched++;
+
+                lastReel = col;
+
+            }
+            else{
+
+                break;
+
+            }
 
 
         }
 
 
-        totalWin += calculateLine(line);
+
+        // payout base sa reels
+
+        if(reelsMatched >= 3){
 
 
-    }
+            let win = 0;
+
+
+            if(reelsMatched === 3){
+
+                win = bet * 2;
+
+            }
+
+
+            if(reelsMatched === 4){
+
+                win = bet * 5;
+
+            }
+
+
+            if(reelsMatched === 5){
+
+                win = bet * 15;
+
+            }
 
 
 
+            // check extra katabing symbol +10%
 
-    if(totalWin>0){
+            if(hasExtraNeighbor(symbol,lastReel)){
+
+
+                win = win * 1.10;
+
+
+            }
+
+
+
+            totalWin += Math.floor(win);
+
+
+        }
+
+
+
+    });
+
+
+
+    if(totalWin > 0){
 
 
         balance += totalWin;
 
+        balanceText.innerHTML = balance;
 
-        balanceText.innerHTML=balance;
+        winText.innerHTML = totalWin;
 
-
-        winText.innerHTML=totalWin;
-
-
-        message.innerHTML="🎉 WIN "+totalWin;
-
+        message.innerHTML = "🎉 WIN +" + totalWin;
 
         playSound(winSound);
 
@@ -369,68 +453,35 @@ function checkWins(){
     }
 
 
-
 }
 
 
 
 
 
+function hasExtraNeighbor(symbol,lastReel){
 
 
-function calculateLine(line){
+    let next = lastReel + 1;
 
 
-    let first=null;
+    if(next >= currentResult.length){
 
-    let count=0;
+        return false;
 
-
-
-    for(let symbol of line){
-
-
-
-        if(symbol==="feheng.png"){
-
-            continue;
-
-        }
+    }
 
 
 
-        if(symbol==="wild.png"){
+    for(let row=0; row<3; row++){
 
 
-            count++;
+        if(
+            currentResult[next][row] === symbol ||
+            currentResult[next][row] === "wild.png"
+        ){
 
-            continue;
-
-        }
-
-
-
-
-        if(first===null){
-
-
-            first=symbol;
-
-            count++;
-
-        }
-
-        else if(symbol===first){
-
-
-            count++;
-
-        }
-
-        else{
-
-
-            break;
+            return true;
 
         }
 
@@ -439,45 +490,7 @@ function calculateLine(line){
 
 
 
-    if(count===3){
+    return false;
 
-        return bet * 2;
-
-    }
-
-
-
-    if(count===4){
-
-        return bet * 5;
-
-    }
-
-
-
-    if(count>=5){
-
-
-        if(line.every(x=>x==="wild.png")){
-
-            return bet * 50;
-
-        }
-
-
-        return bet * 15;
-
-    }
-
-
-
-    return 0;
 
 }
-
-
-
-
-
-
-spinButton.addEventListener("click",spin);
