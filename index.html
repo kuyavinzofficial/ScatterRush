@@ -382,7 +382,25 @@ return;
 }
 
 
+if(mode=="classic"){
+
 coins += 500;
+
+}
+
+
+else if(mode=="diamond"){
+
+coins += 1000;
+
+}
+
+
+else if(mode=="seven"){
+
+coins += 2500;
+
+}
 xp += gainedXP;
 
 
@@ -492,7 +510,34 @@ document.getElementById("spinSound").play();
 
 
 
-coins -= 10;
+let spinCost = 10;
+
+
+if(mode=="diamond"){
+
+spinCost = 25;
+
+}
+
+
+if(mode=="seven"){
+
+spinCost = 50;
+
+}
+
+
+if(coins < spinCost){
+
+document.getElementById("message").innerHTML =
+"❌ Not enough coins";
+
+return;
+
+}
+
+
+coins -= spinCost;
 
 
 document.getElementById("coins").innerHTML=coins;
@@ -600,7 +645,25 @@ else if(a==b || a==c || b==c){
 
 
 
+if(mode=="classic"){
+
 coins += 50;
+
+}
+
+
+else if(mode=="diamond"){
+
+coins += 150;
+
+}
+
+
+else if(mode=="seven"){
+
+coins += 300;
+
+}
 gainedXP = 20;
 
 message="✨ BIG WIN! +50";
