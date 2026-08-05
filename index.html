@@ -272,6 +272,16 @@ transform:translateX(0);
 🪙 Coins:
 <span id="coins">1000</span>
 
+<br>
+
+⭐ Level:
+<span id="level">1</span>
+
+<br>
+
+🔥 XP:
+<span id="xp">0</span>
+
 </div>
 
 
@@ -306,7 +316,11 @@ transform:translateX(0);
 SPIN
 
 </button>
+<button class="spin" onclick="dailyBonus()">
 
+🎁 DAILY BONUS
+
+</button>
 
 <div id="message">
 
@@ -337,10 +351,44 @@ src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg">
 
 
 <script>
+function dailyBonus(){
 
+let today = new Date().toDateString();
+
+let lastBonus = localStorage.getItem("lastBonus");
+
+
+if(lastBonus == today){
+
+document.getElementById("message").innerHTML =
+"🎁 Bonus already claimed today!";
+
+return;
+
+}
+
+
+coins += 500;
+
+
+localStorage.setItem("scatterCoins",coins);
+
+localStorage.setItem("lastBonus",today);
+
+
+document.getElementById("coins").innerHTML=coins;
+
+
+document.getElementById("message").innerHTML =
+"🎉 Daily Bonus +500 Coins!";
+
+
+}
 
 let coins = localStorage.getItem("scatterCoins");
+let level = Number(localStorage.getItem("scatterLevel")) || 1;
 
+let xp = Number(localStorage.getItem("scatterXP")) || 0;
 
 if(coins === null){
 
@@ -405,7 +453,9 @@ coins -= 10;
 
 
 document.getElementById("coins").innerHTML=coins;
+document.getElementById("level").innerHTML = level;
 
+document.getElementById("xp").innerHTML = xp;
 
 
 let r1=document.getElementById("r1");
