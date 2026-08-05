@@ -1,89 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ScatterRush V4</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scatter Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+<div class="game-container">
 
-<h1>🎰 ScatterRush 🎰</h1>
+    <h1>SCATTER GAME</h1>
 
-<div id="stats">
+    <div class="info-panel">
+        <div>
+            <span>Balance</span>
+            <strong id="balance">1000</strong>
+        </div>
 
-<div class="card">
-Coins
-<br>
-<span id="coins">1000</span>
+        <div>
+            <span>Bet</span>
+            <strong id="bet">10</strong>
+        </div>
+
+        <div>
+            <span>Win</span>
+            <strong id="win">0</strong>
+        </div>
+    </div>
+
+
+    <div class="slot-machine">
+
+        <div class="reel" id="reel1">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+        </div>
+
+        <div class="reel" id="reel2">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+        </div>
+
+        <div class="reel" id="reel3">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+        </div>
+
+        <div class="reel" id="reel4">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+        </div>
+
+        <div class="reel" id="reel5">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+            <img src="symbols/apple.png">
+        </div>
+
+    </div>
+
+
+    <div class="lines">
+        <p>Paylines:</p>
+        <span>Line 1</span>
+        <span>Line 2</span>
+        <span>Line 3</span>
+    </div>
+
+
+    <button id="spinButton">
+        SPIN
+    </button>
+
+
+    <div id="message">
+        Good Luck!
+    </div>
+
+
 </div>
 
-<div class="card">
-XP
-<br>
-<span id="xp">0</span>
-</div>
-
-<div class="card">
-Level
-<br>
-<span id="level">1</span>
-</div>
-
-</div>
-
-
-<div id="gameBoard">
-
-<div class="cell"><img id="cell0" class="slotImage"></div>
-<div class="cell"><img id="cell1" class="slotImage"></div>
-<div class="cell"><img id="cell2" class="slotImage"></div>
-<div class="cell"><img id="cell3" class="slotImage"></div>
-<div class="cell"><img id="cell4" class="slotImage"></div>
-
-<div class="cell"><img id="cell5" class="slotImage"></div>
-<div class="cell"><img id="cell6" class="slotImage"></div>
-<div class="cell"><img id="cell7" class="slotImage"></div>
-<div class="cell"><img id="cell8" class="slotImage"></div>
-<div class="cell"><img id="cell9" class="slotImage"></div>
-
-<div class="cell"><img id="cell10" class="slotImage"></div>
-<div class="cell"><img id="cell11" class="slotImage"></div>
-<div class="cell"><img id="cell12" class="slotImage"></div>
-<div class="cell"><img id="cell13" class="slotImage"></div>
-<div class="cell"><img id="cell14" class="slotImage"></div>
-
-<div class="cell"><img id="cell15" class="slotImage"></div>
-<div class="cell"><img id="cell16" class="slotImage"></div>
-<div class="cell"><img id="cell17" class="slotImage"></div>
-<div class="cell"><img id="cell18" class="slotImage"></div>
-<div class="cell"><img id="cell19" class="slotImage"></div>
-
-</div>
-
-<div id="controls">
-
-<button onclick="spin()">🎰 SPIN</button>
-
-<button onclick="dailyBonus()">🎁 BONUS</button>
-
-<button onclick="openShop()">🛒 SHOP</button>
-
-</div>
-
-<p id="message"></p>
-
-</div>
 
 <script src="script.js"></script>
 
 </body>
-</html>
+  </html>
