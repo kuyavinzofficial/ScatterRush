@@ -423,13 +423,31 @@ function checkCombination(line){
 
 
 
-    if(count>=3){
+    if(count === 3){
 
+    return Math.floor(bet * 0.5);
 
-        return count*bet;
+}
 
+if(count === 4){
+
+    return bet;
+
+}
+
+if(count === 5){
+
+    if(line.every(symbol => symbol === "wild.png")){
+
+        return 10 * bet;
 
     }
+
+    return 3 * bet;
+
+}
+
+return 0;
 
 
 
